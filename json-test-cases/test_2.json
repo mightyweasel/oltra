@@ -1,0 +1,215 @@
+{
+  "transcripts": [
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "This block has no word timing data.",
+      "channel_index": 0,
+      "words": []
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Hello.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Hello.",
+          "start": 1.200,
+          "end": 1.650,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Bonjour tout le monde.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Bonjour",
+          "start": 1.800,
+          "end": 2.150,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "monde.",
+          "start": 2.400,
+          "end": 2.850,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Okay, I'm back.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Okay,",
+          "start": 3.100,
+          "end": 3.400,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": " ",
+          "start": 3.400,
+          "end": 3.430,
+          "type": "spacing",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "I'm",
+          "start": 3.430,
+          "end": 3.600,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": " ",
+          "start": 3.600,
+          "end": 3.630,
+          "type": "spacing",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "back.",
+          "start": 3.630,
+          "end": 3.950,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Really?",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Really?",
+          "start": 4.000,
+          "end": 4.350,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Yes.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Yes.",
+          "start": 4.360,
+          "end": 4.600,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "I thought you had already left.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "I",
+          "start": 4.620,
+          "end": 4.700,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "left.",
+          "start": 5.200,
+          "end": 5.600,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "es",
+      "language_probability": 1,
+      "text": "No, I'm still here.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "No,",
+          "start": 5.700,
+          "end": 5.950,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": " ",
+          "start": 5.950,
+          "end": 5.980,
+          "type": "spacing",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "I'm",
+          "start": 5.980,
+          "end": 6.150,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": " ",
+          "start": 6.150,
+          "end": 6.180,
+          "type": "spacing",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "here.",
+          "start": 6.180,
+          "end": 6.500,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Good.",
+      "channel_index": 0,
+      "words": []
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Let's continue.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Let's",
+          "start": 7.100,
+          "end": 7.300,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "continue.",
+          "start": 7.300,
+          "end": 7.700,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    }
+  ]
+}

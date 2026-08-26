@@ -1,0 +1,1435 @@
+{
+  "transcripts": [
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Good afternoon, everyone, and welcome to today's panel on the future of remote and hybrid work.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Good",
+          "start": 0.120,
+          "end": 0.380,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "work.",
+          "start": 5.620,
+          "end": 6.050,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "We're going to look at how organizations are adapting, what employees actually want, and where we think things are heading over the next few years.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "We're",
+          "start": 6.350,
+          "end": 6.650,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "years.",
+          "start": 13.900,
+          "end": 14.300,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Et nous allons également parler de la situation au Canada et en Europe, où les approches sont parfois assez différentes.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Et",
+          "start": 14.650,
+          "end": 14.820,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "différentes.",
+          "start": 20.150,
+          "end": 20.600,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Joining me today are three guests with very different perspectives.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Joining",
+          "start": 21.000,
+          "end": 21.320,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "perspectives.",
+          "start": 25.000,
+          "end": 25.550,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "First, we have Daniel, who leads workplace strategy for a large technology company.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "First,",
+          "start": 25.850,
+          "end": 26.180,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "company.",
+          "start": 30.500,
+          "end": 31.000,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Hi, thanks for having me.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Hi,",
+          "start": 31.300,
+          "end": 31.600,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "me.",
+          "start": 32.100,
+          "end": 32.400,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Nous avons également Sophie, qui travaille sur les politiques du travail et les nouvelles formes d'organisation.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Nous",
+          "start": 32.750,
+          "end": 33.020,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "organisation.",
+          "start": 37.600,
+          "end": 38.150,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Bonjour, merci beaucoup. Je suis ravie d'être ici.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Bonjour,",
+          "start": 38.500,
+          "end": 38.900,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "ici.",
+          "start": 39.850,
+          "end": 40.200,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "And finally, Alex joins us with experience working across both Canadian and European teams.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "And",
+          "start": 40.550,
+          "end": 40.780,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "teams.",
+          "start": 45.200,
+          "end": 45.650,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Thanks. It's great to be here.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "Thanks.",
+          "start": 45.950,
+          "end": 46.300,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "here.",
+          "start": 46.750,
+          "end": 47.100,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Daniel, let me start with you. When you look at the last few years, what has surprised you most about how employees have responded to hybrid work?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Daniel,",
+          "start": 47.450,
+          "end": 47.850,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "work?",
+          "start": 55.800,
+          "end": 56.250,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "I think the biggest surprise has been how quickly people's expectations changed.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "I",
+          "start": 56.650,
+          "end": 56.800,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "changed.",
+          "start": 62.000,
+          "end": 62.500,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "A few years ago, working from home was often treated as a benefit. Now, for many employees, it's simply part of the baseline expectation.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "A",
+          "start": 62.850,
+          "end": 63.000,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "expectation.",
+          "start": 71.200,
+          "end": 71.800,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Je suis assez d'accord avec ça, mais je pense qu'il faut faire une distinction entre flexibilité et travail entièrement à distance.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Je",
+          "start": 72.150,
+          "end": 72.300,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "distance.",
+          "start": 78.900,
+          "end": 79.450,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Dans beaucoup d'entreprises, les employés veulent surtout avoir la possibilité de choisir où ils travaillent selon la nature de leur journée.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Dans",
+          "start": 79.800,
+          "end": 80.050,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "journée.",
+          "start": 87.200,
+          "end": 87.750,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "That's an important distinction.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "That's",
+          "start": 88.050,
+          "end": 88.350,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "distinction.",
+          "start": 88.650,
+          "end": 89.100,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Alex, you've worked with teams on both sides of the Atlantic. Do you see that same distinction?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Alex,",
+          "start": 89.450,
+          "end": 89.800,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "distinction?",
+          "start": 93.300,
+          "end": 93.750,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Absolutely. And I'd actually go one step further.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "Absolutely.",
+          "start": 94.050,
+          "end": 94.500,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "further.",
+          "start": 95.050,
+          "end": 95.400,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "La question n'est plus vraiment de savoir si le travail hybride fonctionne.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "La",
+          "start": 95.700,
+          "end": 95.850,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "fonctionne.",
+          "start": 99.500,
+          "end": 100.000,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "The question is whether we're designing it intentionally or just reacting to what happened during the pandemic.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "The",
+          "start": 100.350,
+          "end": 100.500,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "pandemic.",
+          "start": 106.200,
+          "end": 106.750,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Exactement.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Exactement.",
+          "start": 107.050,
+          "end": 107.500,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Et je pense que c'est là que les différences culturelles deviennent intéressantes.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Et",
+          "start": 107.800,
+          "end": 107.950,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "intéressantes.",
+          "start": 111.500,
+          "end": 112.000,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Can you give us an example?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Can",
+          "start": 112.350,
+          "end": 112.550,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "example?",
+          "start": 113.050,
+          "end": 113.450,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Bien sûr. En France, par exemple, la discussion porte souvent davantage sur le droit à la déconnexion et sur la qualité de vie au travail.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Bien",
+          "start": 113.800,
+          "end": 114.050,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "travail.",
+          "start": 121.500,
+          "end": 122.000,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "On parle moins simplement du nombre de jours passés au bureau.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "On",
+          "start": 122.300,
+          "end": 122.500,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "bureau.",
+          "start": 125.650,
+          "end": 126.100,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "That's interesting, because in North America the conversation often sounds much more operational.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "That's",
+          "start": 126.450,
+          "end": 126.750,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "operational.",
+          "start": 131.500,
+          "end": 132.000,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "How many days are people in the office? Which meetings should be in person? What technology do we need?",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "How",
+          "start": 132.350,
+          "end": 132.550,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "need?",
+          "start": 138.100,
+          "end": 138.550,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Oui, mais ce sont aussi des questions importantes.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Oui,",
+          "start": 138.850,
+          "end": 139.150,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "importantes.",
+          "start": 140.200,
+          "end": 140.650,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Mais elles ne racontent pas toute l'histoire.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Mais",
+          "start": 140.900,
+          "end": 141.150,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "l'histoire.",
+          "start": 142.050,
+          "end": 142.500,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Right. So let's talk about managers, because that's where I think a lot of organizations are struggling.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Right.",
+          "start": 142.850,
+          "end": 143.150,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "struggling.",
+          "start": 148.800,
+          "end": 149.350,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Daniel, what are managers getting wrong?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Daniel,",
+          "start": 149.650,
+          "end": 150.050,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "wrong?",
+          "start": 151.700,
+          "end": 152.100,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "The biggest mistake is confusing visibility with productivity.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "The",
+          "start": 152.450,
+          "end": 152.600,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "productivity.",
+          "start": 156.300,
+          "end": 156.850,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "If someone is sitting at a desk where I can see them, that doesn't necessarily tell me anything about the value they're creating.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "If",
+          "start": 157.150,
+          "end": 157.300,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "creating.",
+          "start": 164.500,
+          "end": 165.050,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "C'est un problème que nous voyons également.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "C'est",
+          "start": 165.350,
+          "end": 165.600,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "également.",
+          "start": 167.100,
+          "end": 167.550,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Certaines équipes ont essayé de résoudre l'incertitude avec davantage de règles, davantage de réunions et davantage de contrôle.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Certaines",
+          "start": 167.850,
+          "end": 168.250,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "contrôle.",
+          "start": 175.300,
+          "end": 175.850,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Which usually creates even more meetings.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "Which",
+          "start": 176.150,
+          "end": 176.400,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "meetings.",
+          "start": 177.100,
+          "end": 177.550,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Exactement.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Exactement.",
+          "start": 177.850,
+          "end": 178.250,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Alex, you've been nodding throughout this. What's your experience?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Alex,",
+          "start": 178.600,
+          "end": 178.950,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "experience?",
+          "start": 182.100,
+          "end": 182.550,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "I've seen exactly that, especially with teams that went remote very quickly and never really redesigned how they communicate.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "I've",
+          "start": 182.900,
+          "end": 183.150,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "communicate.",
+          "start": 189.400,
+          "end": 189.950,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Et parfois, le problème n'est même pas la distance.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "Et",
+          "start": 190.250,
+          "end": 190.400,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "distance.",
+          "start": 193.450,
+          "end": 193.900,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Une mauvaise communication peut exister même lorsque toute l'équipe est dans le même bureau.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "Une",
+          "start": 194.200,
+          "end": 194.400,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "bureau.",
+          "start": 200.200,
+          "end": 200.700,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "That's a good point.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "That's",
+          "start": 201.000,
+          "end": 201.300,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "point.",
+          "start": 201.650,
+          "end": 201.950,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Sophie, si vous deviez donner un seul conseil aux entreprises qui cherchent encore leur modèle, ce serait quoi?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Sophie,",
+          "start": 202.300,
+          "end": 202.700,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "quoi?",
+          "start": 208.000,
+          "end": 208.450,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Je dirais qu'il faut commencer par le travail lui-même, et non par le lieu où il est effectué.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Je",
+          "start": 208.800,
+          "end": 208.950,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "effectué.",
+          "start": 215.300,
+          "end": 215.850,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Il faut demander quelles activités nécessitent réellement une présence physique et lesquelles peuvent être faites efficacement à distance.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Il",
+          "start": 216.150,
+          "end": 216.300,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "distance.",
+          "start": 222.800,
+          "end": 223.350,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "So not one universal policy.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "So",
+          "start": 223.650,
+          "end": 223.850,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "policy.",
+          "start": 224.350,
+          "end": 224.700,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Non, exactement. Une politique unique peut être très simple à administrer, mais elle n'est pas nécessairement efficace.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Non,",
+          "start": 225.050,
+          "end": 225.350,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "efficace.",
+          "start": 230.500,
+          "end": 231.000,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Daniel, does that align with what you're seeing in the technology sector?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Daniel,",
+          "start": 231.350,
+          "end": 231.750,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "sector?",
+          "start": 235.100,
+          "end": 235.550,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Yes, although I'd add one caveat.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Yes,",
+          "start": 235.900,
+          "end": 236.200,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "caveat.",
+          "start": 236.900,
+          "end": 237.250,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Employees want flexibility, but they also want clarity.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Employees",
+          "start": 237.550,
+          "end": 238.000,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "clarity.",
+          "start": 240.200,
+          "end": 240.650,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Oui, et cette clarté est particulièrement importante pour les nouveaux employés.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Oui,",
+          "start": 240.950,
+          "end": 241.250,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "employés.",
+          "start": 244.700,
+          "end": 245.150,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "That's something we haven't talked about yet: onboarding.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "That's",
+          "start": 245.450,
+          "end": 245.750,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "onboarding.",
+          "start": 247.200,
+          "end": 247.650,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "I've found that junior employees often benefit from more intentional in-person time, especially during their first few months.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "I've",
+          "start": 247.950,
+          "end": 248.200,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "months.",
+          "start": 254.400,
+          "end": 254.950,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "C'est vrai, mais je pense qu'il faut aussi éviter de créer deux catégories d'employés.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "C'est",
+          "start": 255.250,
+          "end": 255.500,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "employés.",
+          "start": 260.400,
+          "end": 260.900,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Ceux qui ont accès aux meilleures interactions et ceux qui restent constamment à distance.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Ceux",
+          "start": 261.200,
+          "end": 261.450,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "distance.",
+          "start": 266.600,
+          "end": 267.100,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "And that brings us to the final question.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "And",
+          "start": 267.450,
+          "end": 267.650,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "question.",
+          "start": 270.000,
+          "end": 270.450,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "If we were sitting here again five years from now, what would you hope has changed?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "If",
+          "start": 270.750,
+          "end": 270.900,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "changed?",
+          "start": 275.500,
+          "end": 276.000,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "I'd hope we're talking less about where people work and more about how we build effective organizations.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "I'd",
+          "start": 276.350,
+          "end": 276.600,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "organizations.",
+          "start": 282.000,
+          "end": 282.550,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "J'espère surtout que nous aurons appris à faire davantage confiance aux équipes.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "J'espère",
+          "start": 282.900,
+          "end": 283.300,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "équipes.",
+          "start": 287.200,
+          "end": 287.650,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "For me, it's about making flexibility feel normal rather than exceptional.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "For",
+          "start": 288.000,
+          "end": 288.200,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "exceptional.",
+          "start": 292.500,
+          "end": 293.000,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Et peut-être que dans cinq ans, nous ne parlerons même plus de travail hybride.",
+      "channel_index": 3,
+      "words": [
+        {
+          "text": "Et",
+          "start": 293.300,
+          "end": 293.450,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        },
+        {
+          "text": "hybride.",
+          "start": 297.200,
+          "end": 297.650,
+          "type": "word",
+          "speaker_id": "speaker_3"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Maybe it'll just be work.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Maybe",
+          "start": 298.000,
+          "end": 298.300,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "work.",
+          "start": 299.000,
+          "end": 299.350,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Exactement.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Exactement.",
+          "start": 299.650,
+          "end": 300.050,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "I think that's a pretty good place to end.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "I",
+          "start": 300.350,
+          "end": 300.500,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "end.",
+          "start": 302.800,
+          "end": 303.200,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Thank you all for joining us, and thank you to everyone watching.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Thank",
+          "start": 303.500,
+          "end": 303.800,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "watching.",
+          "start": 307.000,
+          "end": 307.500,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Merci à tous.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Merci",
+          "start": 307.800,
+          "end": 308.150,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "tous.",
+          "start": 308.350,
+          "end": 308.650,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    }
+  ]
+}

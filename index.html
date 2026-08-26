@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/pico.min.css">
+    <link rel="stylesheet" href="css/pico.colors.min.css">
+    <link rel="stylesheet" href="css/basic.css">
+    <title>OLTRA - OL Transcript Analysis</title>
+  </head>
+  <body>
+    <main class="container">
+      <hgroup><h1>🔮 OLTRA</h1><p><small>OL Event Transcript Analysis</small></p></hgroup>
+      <form id="drop-zone">
+        <fieldset class="drop-zone">
+          <input type="file" id="json-file" name="json-file" accept=".json,application/json" />
+          <label for="json-file">Drag and drop files here or <kbd>browse</kbd></label>
+        </fieldset>
+      </form>
+      <div id="oanalysis"></div>
+      <div id="otranscript"></div>
+    </main>
+    <script type="module" src="js/oltra.js"></script>
+  </body>
+</html>

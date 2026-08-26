@@ -1,0 +1,19 @@
+.drop-zone {
+  border: 2px dashed var(--pico-muted-border-color);
+  background-color: var(--pico-card-background-color);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-radius: var(--pico-border-radius);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.drop-zone:hover, 
+.drop-zone.dragover {
+  border-color: var(--pico-primary-border);
+  background-color: var(--pico-form-element-selected-background-color);
+}
+
+.drop-zone input[type="file"] {
+  display: none; 
+}

@@ -1,0 +1,174 @@
+{"transcripts": [
+{
+  "language_code": "en",
+  "language_probability": 1,
+  "text": "With a soft and whispery American accent, I'm the ideal choice for creating ASMR content, meditative guides, or adding an intimate feel to your narrative projects.",
+  "channel_index": 0,      
+  "words": [
+    {
+      "text": "With",
+      "start": 0.119,
+      "end": 0.259,
+      "type": "word",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": " ",
+      "start": 0.239,
+      "end": 0.299,
+      "type": "spacing",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": "a",
+      "start": 0.279,
+      "end": 0.359,
+      "type": "word",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": " ",
+      "start": 13.919,
+      "end": 13.939,
+      "type": "spacing",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": "projects.",
+      "start": 13.919,
+      "end": 14.779,
+      "type": "word",
+      "speaker_id": "speaker_0"
+    }
+  ]
+},
+{
+  "language_code": "fr",
+  "language_probability": 1,
+  "text": "Avec un accent américain doux et feutré, je suis le choix idéal pour créer du contenu ASMR, des séances de méditation guidée ou apporter une touche intime à vos projets narratifs.",
+  "channel_index": 1,
+  "words": [
+    {
+      "text": "Avec",
+      "start": 15.119,
+      "end": 15.259,
+      "type": "word",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": " ",
+      "start": 15.239,
+      "end": 15.299,
+      "type": "spacing",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": "a",
+      "start": 15.279,
+      "end": 15.359,
+      "type": "word",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": " ",
+      "start": 23.919,
+      "end": 23.939,
+      "type": "spacing",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": "projects.",
+      "start": 23.919,
+      "end": 24.779,
+      "type": "word",
+      "speaker_id": "speaker_1"
+    }
+  ]
+},
+{
+  "language_code": "en",
+  "language_probability": 1,
+  "text": "This is another block of text to try and test out. Let's see how it goes",
+  "channel_index": 0,      
+  "words": [
+    {
+      "text": "This",
+      "start": 26.119,
+      "end": 26.259,
+      "type": "word",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": " ",
+      "start": 26.239,
+      "end": 26.299,
+      "type": "spacing",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": "a",
+      "start": 26.279,
+      "end": 26.359,
+      "type": "word",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": " ",
+      "start": 33.919,
+      "end": 33.939,
+      "type": "spacing",
+      "speaker_id": "speaker_0"
+    },
+    {
+      "text": "goes.",
+      "start": 33.919,
+      "end": 34.779,
+      "type": "word",
+      "speaker_id": "speaker_0"
+    }
+  ]
+},
+{
+  "language_code": "fr",
+  "language_probability": 1,
+  "text": "Voici un autre bloc de texte à essayer et à tester. Voyons comment ça se passe.",
+  "channel_index": 1,
+  "words": [
+    {
+      "text": "Voici",
+      "start": 35.119,
+      "end": 35.259,
+      "type": "word",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": " ",
+      "start": 35.239,
+      "end": 35.299,
+      "type": "spacing",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": "a",
+      "start": 35.279,
+      "end": 35.359,
+      "type": "word",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": " ",
+      "start": 35.919,
+      "end": 35.939,
+      "type": "spacing",
+      "speaker_id": "speaker_1"
+    },
+    {
+      "text": "passe.",
+      "start": 37.919,
+      "end": 38.779,
+      "type": "word",
+      "speaker_id": "speaker_1"
+    }
+  ]
+}
+]}

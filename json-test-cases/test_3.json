@@ -1,0 +1,456 @@
+{
+  "transcripts": [
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Hey everyone, are we ready to begin?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Hey",
+          "start": 0.120,
+          "end": 0.380,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "begin?",
+          "start": 1.020,
+          "end": 1.420,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Oui, je suis prêt.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Oui,",
+          "start": 1.700,
+          "end": 1.980,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "prêt.",
+          "start": 2.350,
+          "end": 2.700,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Same here. I've got everything set up.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Same",
+          "start": 3.020,
+          "end": 3.280,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "set",
+          "start": 4.120,
+          "end": 4.320,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Parfait. J'aimerais commencer par vérifier quelque chose.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Parfait.",
+          "start": 4.650,
+          "end": 5.020,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": " ",
+          "start": 5.020,
+          "end": 5.050,
+          "type": "spacing",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "quelque",
+          "start": 5.620,
+          "end": 5.920,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "chose.",
+          "start": 6.020,
+          "end": 6.350,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Go ahead.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "Go",
+          "start": 6.600,
+          "end": 6.820,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "ahead.",
+          "start": 6.850,
+          "end": 7.180,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Est-ce que le fichier audio est bien celui de la session précédente?",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Est-ce",
+          "start": 7.500,
+          "end": 7.820,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "précédente?",
+          "start": 9.050,
+          "end": 9.500,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "I think so, but let me check.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "I",
+          "start": 9.800,
+          "end": 9.920,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "check.",
+          "start": 10.650,
+          "end": 11.020,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "D'accord, prends ton temps.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "D'accord,",
+          "start": 11.300,
+          "end": 11.680,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "temps.",
+          "start": 12.050,
+          "end": 12.400,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "En fait, je viens de remarquer un petit problème.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "En",
+          "start": 12.650,
+          "end": 12.820,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": " ",
+          "start": 12.820,
+          "end": 12.850,
+          "type": "spacing",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "fait,",
+          "start": 12.850,
+          "end": 13.120,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": " ",
+          "start": 13.120,
+          "end": 13.150,
+          "type": "spacing",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "problème.",
+          "start": 14.250,
+          "end": 14.700,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "What's wrong?",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "What's?",
+          "start": 14.950,
+          "end": 15.300,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "wrong?",
+          "start": 15.340,
+          "end": 15.680,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Le début de l'enregistrement semble être coupé.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Le",
+          "start": 15.950,
+          "end": 16.080,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "coupé.",
+          "start": 17.150,
+          "end": 17.500,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Oh, that's not good.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Oh,",
+          "start": 17.800,
+          "end": 18.050,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "good.",
+          "start": 18.400,
+          "end": 18.720,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Non, ce n'est pas très grave. Nous pouvons refaire cette partie.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Non,",
+          "start": 19.050,
+          "end": 19.320,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": " ",
+          "start": 19.320,
+          "end": 19.350,
+          "type": "spacing",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "ce",
+          "start": 19.350,
+          "end": 19.480,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": " ",
+          "start": 19.480,
+          "end": 19.510,
+          "type": "spacing",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "partie.",
+          "start": 20.850,
+          "end": 21.200,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "That works for me.",
+      "channel_index": 0,
+      "words": [
+        {
+          "text": "That",
+          "start": 21.500,
+          "end": 21.720,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        },
+        {
+          "text": "me.",
+          "start": 22.150,
+          "end": 22.420,
+          "type": "word",
+          "speaker_id": "speaker_0"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Très bien. Je vais simplement reprendre depuis le début.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Très",
+          "start": 22.700,
+          "end": 22.920,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "début.",
+          "start": 23.850,
+          "end": 24.200,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Ready when you are.",
+      "channel_index": 2,
+      "words": [
+        {
+          "text": "Ready",
+          "start": 24.500,
+          "end": 24.800,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        },
+        {
+          "text": "are.",
+          "start": 25.100,
+          "end": 25.400,
+          "type": "word",
+          "speaker_id": "speaker_2"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Une seconde.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Une",
+          "start": 25.700,
+          "end": 25.880,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        },
+        {
+          "text": "seconde.",
+          "start": 25.920,
+          "end": 26.250,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "fr",
+      "language_probability": 1,
+      "text": "Voilà.",
+      "channel_index": 1,
+      "words": [
+        {
+          "text": "Voilà.",
+          "start": 26.500,
+          "end": 26.850,
+          "type": "word",
+          "speaker_id": "speaker_1"
+        }
+      ]
+    },
+    {
+      "language_code": "en",
+      "language_probability": 1,
+      "text": "Perfect.",
+      "channel_index": 0,
+      "words": []
+    }
+  ]
+}
