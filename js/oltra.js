@@ -17,6 +17,7 @@ const fileInput = document.getElementById("json-file");
 const dropZone = document.getElementById("drop-zone");
 const transcript_frame = document.getElementById("otranscript");
 const analysis_frame = document.getElementById("oanalysis");
+const file_frame = document.getElementById("ofile");
 
 const display_error = function() {
   document.getElementById('error-alert').style.display='block';
@@ -27,6 +28,7 @@ const dismiss_error = function() {
 const clear_analysis = function() {
   transcript_frame.innerHTML = "";
   analysis_frame.innerHTML = "";
+  file_frame.innerHTML = "";
 };
 
 async function load_json(file) {
@@ -43,6 +45,7 @@ async function load_json(file) {
       if (!Array.isArray(el_parsed.transcripts)) { throw new Error("Invalid transcript format: 'transcripts' array not found."); }
       process_event_transcript_default(el_parsed);
     }
+    file_frame.innerHTML = `<h2>📑 ${file.name}</h2>`;
   } catch (error) {
     console.error(error);
     display_error();
@@ -63,9 +66,31 @@ const make_transcript_entry = function(item) {
 };
 
 const make_analysis_entry = function(item) {
+  let speakerMetricsHTML = "";
+  for (const [speaker, { en, fr, total }] of Object.entries(item.speakerMetrics)) {
+    speakerMetricsHTML += `<tr>
+      <th scope="row">${speaker}</th>
+      <td>${format_percent( (en/total)*100 )} (${format_duration(en)})</td>
+      <td>${format_percent( (fr/total)*100 )} (${format_duration(fr)})</td>
+      <td>${format_duration(total)}</td>
+    </tr>`;
+  }
   return `<hgroup>
-    <h2><mark>${item.enPercent.toFixed(2)}%</mark> English vs. <mark>${item.frPercent.toFixed(2)}%</mark> French</h2>
+    <h3><mark>${format_percent(item.enPercent)}</mark> English vs. <mark>${format_percent(item.frPercent)}</mark> French</h3>
     <p>Total: ${format_duration(item.total)} (EN: ${format_duration(item.enAmount)} vs. FR: ${format_duration(item.frAmount)})</p>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Speaker</th>
+          <th scope="col">English</th>
+          <th scope="col">French</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${speakerMetricsHTML}
+      </tbody>
+    </table>
     </hgroup>`;
 };
 
@@ -74,10 +99,15 @@ const format_duration = function(seconds) {
   const secs = Math.floor(seconds % 60);
   return `${minutes}m ${secs}s`;
 };
+const format_percent = function(item){
+  return `${item.toFixed(2)}%`;
+};
 
 const generate_metrics = function(result) {
   let enAmount = 0;
   let frAmount = 0;
+  const speakerMetrics = {};
+
   result.forEach((item) => {
     const amount = (item.end != null && item.start != null) ? (item.end - item.start) : 0;
     transcript_frame.insertAdjacentHTML("beforeend", 
@@ -86,15 +116,17 @@ const generate_metrics = function(result) {
         start: item.start, end: item.end, amount: amount, speaker: item.speaker
       })
     );
-    if (item.language === "en") { enAmount += amount; } 
-    else if (item.language === "fr") { frAmount += amount; }
+    if (!speakerMetrics[item.speaker]) { speakerMetrics[item.speaker] = { en: 0, fr: 0, total: 0 }; }
+    if (item.language === "en") { enAmount += amount; speakerMetrics[item.speaker].en += amount; speakerMetrics[item.speaker].total += amount; } 
+    else if (item.language === "fr") { frAmount += amount; speakerMetrics[item.speaker].fr += amount; speakerMetrics[item.speaker].total += amount; }
+    
   });
 
   const total = enAmount + frAmount;
   const enPercent = (enAmount / total) * 100;
   const frPercent = (frAmount / total) * 100;
-
-  analysis_frame.insertAdjacentHTML("beforeend", make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total }));
+  
+  analysis_frame.insertAdjacentHTML("beforeend", make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics }));
 };
 
 const process_event_transcript_custom = function(el_parsed) {
@@ -118,7 +150,8 @@ const process_event_transcript_default = function(el_parsed) {
   dismiss_error();
 
   const result = el_parsed.transcripts.map(transcript => {
-    const words = transcript.words.filter(word => word.type === "word");
+    //const words = transcript.words.filter(word => word.type === "word");
+    const words = (transcript.words ?? []).filter(word => word.type === "word");
     return {
       text: transcript.text,
       channel: transcript.channel_index, language: transcript.language_code,
