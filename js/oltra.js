@@ -78,6 +78,7 @@ const make_analysis_entry = function(item) {
   
   return `<hgroup>
     <h3><mark>${format_percent(item.enPercent)}</mark> English vs. <mark>${format_percent(item.frPercent)}</mark> French</h3>
+    ${format_LES(item)}
     <table>
       <thead>
         <tr>
@@ -108,6 +109,24 @@ const format_duration = function(seconds) {
 
 const format_percent = function(item){
   return `${item.toFixed(2)}%`;
+};
+
+const format_LES = function(item){
+  let LES_ranges = {
+    "Excellent": "<strong>Excellent Baseline:</strong> Highly balanced. Proves robust bilingual integration across the event agenda.",
+    "Acceptable": "<strong>Acceptable Compliance:</strong> Satisfactory. One language slightly dominated, but both communities had significant, active platforms.",
+    "Imbalance": "<strong>Linguistic Imbalance:</strong> Marginal compliance. Indicates that the event leaned heavily unilingual."
+  };
+  let LES = 1.0 - (2.0 * (Math.abs((item.enAmount/(item.enAmount + item.frAmount))-0.5)));
+  let LES_summary = "";
+  if(LES >= 0.85) {
+    LES_summary = LES_ranges["Excellent"];
+  } else if(LES < 0.85 && LES >= 0.70) {
+    LES_summary = LES_ranges["Acceptable"];
+  } else if(LES < 0.70) {
+    LES_summary = LES_ranges["Imbalance"];
+  }
+  return `<kbd>🎯Language Equilibrium Score ${LES.toFixed(2)}</kbd><blockquote>${LES_summary}</blockquote>`;
 };
 
 const generate_metrics = function(result) {
