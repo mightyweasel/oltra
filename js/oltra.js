@@ -69,15 +69,15 @@ const make_analysis_entry = function(item) {
   let speakerMetricsHTML = "";
   for (const [speaker, { en, fr, total }] of Object.entries(item.speakerMetrics)) {
     speakerMetricsHTML += `<tr>
-      <th scope="row">${speaker}</th>
-      <td>${format_percent( (en/total)*100 )} (${format_duration(en)})</td>
-      <td>${format_percent( (fr/total)*100 )} (${format_duration(fr)})</td>
-      <td>${format_duration(total)}</td>
+      <th scope="row"><small>${speaker}</small></th>
+      <td><small>${format_percent( (en/total)*100 )} (${format_duration(en)})</small></td>
+      <td><small>${format_percent( (fr/total)*100 )} (${format_duration(fr)})</small></td>
+      <td><small>${format_duration(total)}</small></td>
     </tr>`;
   }
+  
   return `<hgroup>
     <h3><mark>${format_percent(item.enPercent)}</mark> English vs. <mark>${format_percent(item.frPercent)}</mark> French</h3>
-    <p>Total: ${format_duration(item.total)} (EN: ${format_duration(item.enAmount)} vs. FR: ${format_duration(item.frAmount)})</p>
     <table>
       <thead>
         <tr>
@@ -88,6 +88,12 @@ const make_analysis_entry = function(item) {
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <th scope="row"><strong>TOTAL</strong></th>
+          <td><strong>${format_duration(item.enAmount)}</strong></td>
+          <td><strong>${format_duration(item.frAmount)}</strong></td>
+          <td><strong>${format_duration(item.total)}</strong></td>
+        </tr>
         ${speakerMetricsHTML}
       </tbody>
     </table>
@@ -99,6 +105,7 @@ const format_duration = function(seconds) {
   const secs = Math.floor(seconds % 60);
   return `${minutes}m ${secs}s`;
 };
+
 const format_percent = function(item){
   return `${item.toFixed(2)}%`;
 };
