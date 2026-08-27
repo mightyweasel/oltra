@@ -21,6 +21,12 @@
         </header>
         <p id="error-alert-header-p">There was a problem processing your request. Check .json file and try again.</p>
       </article>
+      <fieldset>
+        <input type="radio" id="el_custom" name="parse-format" checked value="el_custom"/>
+        <label htmlFor="el_custom">Custom 11 Labs Transcript</label>
+        <input type="radio" id="el_default" name="parse-format" value="el_default"/>
+        <label htmlFor="el_default">Default 11 Labs Multichannel</label>
+      </fieldset>
       <form id="drop-zone">
         <fieldset class="drop-zone">
           <input type="file" id="json-file" name="json-file" accept=".json,application/json" />
@@ -30,6 +36,7 @@
       <div id="oanalysis"></div>
       <div id="otranscript"></div>
     </main>
+    <script src="js/eld.xs.min.js" charset="utf-8"></script>
     <script type="module" src="js/oltra.js"></script>
   </body>
 </html>
