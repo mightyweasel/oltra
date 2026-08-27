@@ -10,7 +10,17 @@
   </head>
   <body>
     <main class="container">
-      <hgroup><h1>🔮 OLTRA</h1><p><small>OL Event Transcript Analysis</small></p></hgroup>
+      <hgroup>
+        <h1>🔮 OLTRA</h1>
+        <p><small>OL Event Transcript Analysis</small></p>
+      </hgroup>
+      <article id="error-alert">
+        <header id="error-alert-header">
+          <span><strong>⛔ Error</strong></span>
+          <button id="error-alert-header-button" aria-label="Close" rel="prev" onclick="document.getElementById('error-alert').style.display='none'">&times;</button>
+        </header>
+        <p id="error-alert-header-p">There was a problem processing your request. Check .json file and try again.</p>
+      </article>
       <form id="drop-zone">
         <fieldset class="drop-zone">
           <input type="file" id="json-file" name="json-file" accept=".json,application/json" />
