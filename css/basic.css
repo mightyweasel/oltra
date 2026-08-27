@@ -17,3 +17,19 @@
 .drop-zone input[type="file"] {
   display: none; 
 }
+
+#error-alert {
+  display: none;
+}
+
+#error-alert-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 0;background-color: crimson;color:white;
+}
+
+#error-alert-header-button {
+  background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; padding: 0; width: auto;
+}
+
+#error-alert-header-p {
+  margin-bottom: 0; margin-top: var(--pico-spacing);
+}

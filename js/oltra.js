@@ -5,6 +5,17 @@ const dropZone = document.getElementById("drop-zone");
 const transcript_frame = document.getElementById("otranscript");
 const analysis_frame = document.getElementById("oanalysis");
 
+const display_error = function() {
+  document.getElementById('error-alert').style.display='block';
+}
+const dismiss_error = function() {
+  document.getElementById('error-alert').style.display='none';
+}
+const clear_analysis = function() {
+  transcript_frame.innerHTML = "";
+  analysis_frame.innerHTML = "";
+}
+
 async function load_json(file) {
   if (!file) { return; }
   try {
@@ -13,7 +24,7 @@ async function load_json(file) {
     process_event_transcript(el_parsed);
   } catch (error) {
     console.error(error);
-    alert("Unable to load the JSON file.");
+    display_error();
   }
 }
 fileInput.addEventListener("change", function(event) { load_json(event.target.files[0]); });
@@ -22,8 +33,8 @@ dropZone.addEventListener("dragleave", function() { dropZone.classList.remove("d
 dropZone.addEventListener("drop", function(event) { event.preventDefault(); dropZone.classList.remove("dragging"); const file = event.dataTransfer.files[0]; load_json(file); });
        
 const process_event_transcript = function(el_parsed) {
-  transcript_frame.innerHTML = "";
-  analysis_frame.innerHTML = "";
+  clear_analysis();
+  dismiss_error();
 
   const format_duration = function(seconds) {
     const minutes = Math.floor(seconds / 60);
