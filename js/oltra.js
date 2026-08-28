@@ -10,6 +10,61 @@
   // 'es'
   alert("Custom Process");
 */
+
+const chart = echarts.init(document.getElementById('chart'));
+const data = [];
+const addMetric = function(seconds, les) { data.push([seconds, les]); }
+const time = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
+const display_chart = function() { document.getElementById('chart').style.display = 'block'; requestAnimationFrame(() => chart.resize()); };
+const hide_chart = function() { document.getElementById('chart').style.display='none'; };
+hide_chart();
+const updateChart = function() {
+  const displayData = data.map(([x, y]) => [x, Math.max(y, 0.5)]);
+  chart.setOption({
+    xAxis: { max: data.length ? data.at(-1)[0].toFixed(0) : 0 },
+    series: [{ data: displayData }]
+  });
+  display_chart();
+};
+chart.setOption({
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: { type: 'line' },
+    formatter: p => {
+      const index = p[0].dataIndex;
+      const [seconds, les] = data[index];
+      const status = les >= 0.85 ? 'Excellent'
+                   : les >= 0.7 ? 'Acceptable'
+                   : 'Imbalance';
+      return `${time(seconds.toFixed(0))}<br>LES: <b>${les}</b> — ${status}`;
+    }
+  },
+  grid: { left: 55, right: 20, top: 35, bottom: 45 },
+  xAxis: {
+    type: 'value', min: 0,
+    name: 'Speaking Time', nameLocation: 'middle', nameGap: 30,
+    axisLabel: { formatter: time }
+  },
+  yAxis: {
+    type: 'value', min: 0.5, max: 1,
+    name: 'Language Equilibrium', nameLocation: 'middle', nameGap: 40
+  },
+  series: [{
+    type: 'line',
+    data,
+    smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#2563eb' },
+    markArea: {
+      silent: true, itemStyle: { opacity: .12 },
+      data: [
+        [{ yAxis: 0.0, itemStyle: { color: '#ef4444' } }, { yAxis: 0.7 }],
+        [{ yAxis: 0.7, itemStyle: { color: '#eab308' } }, { yAxis: 0.85 }],
+        [{ yAxis: 0.85, itemStyle: { color: '#22c55e' } }, { yAxis: 1.0 }]
+      ]
+    }
+  }]
+});
+addEventListener('resize', () => chart.resize());
+
 const detector = eld.newInstance();
 detector.setLanguageSubset(['en', 'fr']);
 
@@ -29,6 +84,8 @@ const clear_analysis = function() {
   transcript_frame.innerHTML = "";
   analysis_frame.innerHTML = "";
   file_frame.innerHTML = "";
+  data.length = 0;
+  LES_calcstore.format_LES_previous_LES = 0;
 };
 
 async function load_json(file) {
@@ -111,31 +168,38 @@ const format_percent = function(item){
   return `${item.toFixed(2)}%`;
 };
 
-const format_LES = function(item,mode){
-  if(mode === "undefined") { mode = "default"; }
+const LES_calcstore = { "format_LES_previous_LES": 0 };
+const formatter = new Intl.NumberFormat('en-US', { signDisplay: 'always' });
+const calculate_LES = function(item){
+  let LES = 1.0 - (2.0 * (Math.abs((item.enAmount/(item.enAmount + item.frAmount))-0.5)));
+  return LES;
+};
+const get_LES_rank = function(LES) {
   let LES_ranges = {
     "Excellent": "<strong>Excellent Baseline:</strong> Highly balanced. Proves robust bilingual integration across the event agenda.",
     "Acceptable": "<strong>Acceptable Compliance:</strong> Satisfactory. One language slightly dominated, but both communities had significant, active platforms.",
     "Imbalance": "<strong>Linguistic Imbalance:</strong> Marginal compliance. Indicates that the event leaned heavily unilingual."
   };
-  let LES = 1.0 - (2.0 * (Math.abs((item.enAmount/(item.enAmount + item.frAmount))-0.5)));
-  let LES_rank = "";
-  let LES_summary = "";
-  if(LES >= 0.85) {
-    LES_rank = "Excellent";
-    LES_summary = LES_ranges["Excellent"];
-  } else if(LES < 0.85 && LES >= 0.70) {
-    LES_rank = "Acceptable";
-    LES_summary = LES_ranges["Acceptable"];
-  } else if(LES < 0.70) {
-    LES_rank = "Imbalance";
-    LES_summary = LES_ranges["Imbalance"];
-  }
+
+  let LES_rank = "Imbalance";
+  if(LES >= 0.85) { LES_rank = "Excellent"; } 
+  else if(LES < 0.85 && LES >= 0.70) { LES_rank = "Acceptable"; } 
+  else if(LES < 0.70) { LES_rank = "Imbalance"; }
+
+  return { "rank": LES_rank, "summary": LES_ranges[LES_rank] };
+};
+const format_LES = function(item,mode){
+  if(mode === "undefined") { mode = "default"; }
+
+  let LES = calculate_LES(item); //1.0 - (2.0 * (Math.abs((item.enAmount/(item.enAmount + item.frAmount))-0.5)));
+  let LES_delta = LES - LES_calcstore.format_LES_previous_LES;
+  LES_calcstore.format_LES_previous_LES = LES;
+  let LES_pkg = get_LES_rank(LES);
   let htmlReturn = "";
   if(mode == "badge") {
-    htmlReturn = `<mark>🎯LES ${LES.toFixed(2)} ${LES_rank}</mark>`;
+    htmlReturn = `<mark>⚖️∆LES ${formatter.format(LES_delta.toFixed(2))}</mark> <mark>🎯LES ${LES.toFixed(2)} ${LES_pkg.rank}</mark>`;
   } else {
-    htmlReturn = `<blockquote><kbd>🎯Language Equilibrium Score ${LES.toFixed(2)}</kbd><br />${LES_summary}</blockquote>`;
+    htmlReturn = `<blockquote><kbd>🎯Language Equilibrium Score ${LES.toFixed(2)}</kbd><br />${LES_pkg.summary}</blockquote>`;
   }
   return htmlReturn; 
 };
@@ -158,6 +222,8 @@ const generate_metrics = function(result) {
     if (item.language === "en") { enAmount += amount; speakerMetrics[item.speaker].en += amount; speakerMetrics[item.speaker].total += amount; } 
     else if (item.language === "fr") { frAmount += amount; speakerMetrics[item.speaker].fr += amount; speakerMetrics[item.speaker].total += amount; }
     runningAmount += amount;
+    addMetric(runningAmount, calculate_LES({ "enAmount": enAmount, "frAmount": frAmount }).toFixed(2));
+
     transcript_frame.insertAdjacentHTML("beforeend", format_LES({ "enAmount": enAmount, "frAmount": frAmount, "total": runningAmount },"badge"));
   });
 
@@ -166,6 +232,7 @@ const generate_metrics = function(result) {
   const frPercent = (frAmount / total) * 100;
   
   analysis_frame.insertAdjacentHTML("beforeend", make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics }));
+  updateChart();
 };
 
 const process_event_transcript_custom = function(el_parsed) {
