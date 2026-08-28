@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/pico.min.css">
     <link rel="stylesheet" href="css/pico.colors.min.css">
-    <link rel="stylesheet" href="css/basic.css">
+    <link rel="stylesheet" href="css/basic.css?v=0.1.2">
     <title>OLTRA - OL Transcript Analysis</title>
   </head>
   <body>
@@ -21,7 +21,7 @@
         </header>
         <p id="error-alert-header-p">There was a problem processing your request. Check .json file and try again.</p>
       </article>
-      <fieldset>
+      <fieldset id="drop-zone-format-select">
         <input type="radio" id="el_custom" name="parse-format" checked value="el_custom"/>
         <label for="el_custom">Custom 11 Labs Transcript</label>
         <input type="radio" id="el_default" name="parse-format" value="el_default"/>
@@ -34,12 +34,12 @@
         </fieldset>
       </form>
       <div id="ofile"></div>
-      <div id="chart" style="width: 100%; height: 200px;"></div>
+      <div id="chart"></div>
       <div id="oanalysis"></div>
       <div id="otranscript"></div>
     </main>
     <script src="js/echarts.min.js"></script>
     <script src="js/eld.xs.min.js" charset="utf-8"></script>
-    <script type="module" src="js/oltra.js?v=0.1.1"></script>
+    <script type="module" src="js/oltra.js?v=0.1.2"></script>
   </body>
 </html>
