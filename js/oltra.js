@@ -64,6 +64,7 @@ chart.setOption({
   }]
 });
 addEventListener('resize', () => chart.resize());
+window.addEventListener('beforeprint', () => { chart.resize(); });
 
 const detector = eld.newInstance();
 detector.setLanguageSubset(['en', 'fr']);
