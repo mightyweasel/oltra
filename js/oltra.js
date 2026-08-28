@@ -13,16 +13,32 @@
 
 const chart = echarts.init(document.getElementById('chart'));
 const data = [];
-const addMetric = function(seconds, les) { data.push([seconds, les]); }
+const addMetric = function(seconds, les, speaker) { data.push([seconds, les, speaker]); }
 const time = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
 const display_chart = function() { document.getElementById('chart').style.display = 'block'; requestAnimationFrame(() => chart.resize()); };
 const hide_chart = function() { document.getElementById('chart').style.display='none'; };
 hide_chart();
-const updateChart = function() {
-  const displayData = data.map(([x, y]) => [x, Math.max(y, 0.5)]);
+const updateChart = function(speakerChanges) {
+  const displayData = data.map(([x, y, z]) => [x, Math.max(y, 0.5), z]);
   chart.setOption({
     xAxis: { max: data.length ? data.at(-1)[0].toFixed(0) : 0 },
-    series: [{ data: displayData }]
+    series: [{ 
+      data: displayData,
+      markLine: {
+        symbol: ['none', 'none'],
+        silent: false,
+        lineStyle: {
+          color: '#2563eb', width: 1, type: 'dashed'
+        },
+        label: {
+          show: true, position: 'insideEndTop',
+          formatter: params => params.name
+        },
+        data: speakerChanges.map(([x, y, speaker]) => ({
+          xAxis: x //,name: speaker
+        }))
+      }
+    }]
   });
   display_chart();
 };
@@ -32,11 +48,11 @@ chart.setOption({
     axisPointer: { type: 'line' },
     formatter: p => {
       const index = p[0].dataIndex;
-      const [seconds, les] = data[index];
+      const [seconds, les, speaker] = data[index];
       const status = les >= 0.85 ? 'Excellent'
                    : les >= 0.7 ? 'Acceptable'
                    : 'Imbalance';
-      return `${time(seconds.toFixed(0))}<br>LES: <b>${les}</b> — ${status}`;
+      return `${time(seconds.toFixed(0))}<br />${speaker}<br />LES: <b>${les}</b> — ${status}`;
     }
   },
   grid: { left: 55, right: 20, top: 35, bottom: 45 },
@@ -210,8 +226,9 @@ const generate_metrics = function(result) {
   let frAmount = 0;
   let runningAmount = 0;
   const speakerMetrics = {};
+  const speakerChanges = [];
 
-  result.forEach((item) => {
+  result.forEach((item, index) => {
     const amount = (item.end != null && item.start != null) ? (item.end - item.start) : 0;
     transcript_frame.insertAdjacentHTML("beforeend", 
       make_transcript_entry({
@@ -222,8 +239,14 @@ const generate_metrics = function(result) {
     if (!speakerMetrics[item.speaker]) { speakerMetrics[item.speaker] = { en: 0, fr: 0, total: 0 }; }
     if (item.language === "en") { enAmount += amount; speakerMetrics[item.speaker].en += amount; speakerMetrics[item.speaker].total += amount; } 
     else if (item.language === "fr") { frAmount += amount; speakerMetrics[item.speaker].fr += amount; speakerMetrics[item.speaker].total += amount; }
+    
+    if (index > 0 && item.speaker !== result[index - 1].speaker) {
+      const LES = calculate_LES({ enAmount, frAmount });
+      speakerChanges.push([ runningAmount, LES, item.speaker ]);
+    }
+    
     runningAmount += amount;
-    addMetric(runningAmount, calculate_LES({ "enAmount": enAmount, "frAmount": frAmount }).toFixed(2));
+    addMetric(runningAmount, calculate_LES({ "enAmount": enAmount, "frAmount": frAmount }).toFixed(2), item.speaker);
 
     transcript_frame.insertAdjacentHTML("beforeend", format_LES({ "enAmount": enAmount, "frAmount": frAmount, "total": runningAmount },"badge"));
   });
@@ -233,7 +256,7 @@ const generate_metrics = function(result) {
   const frPercent = (frAmount / total) * 100;
   
   analysis_frame.insertAdjacentHTML("beforeend", make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics }));
-  updateChart();
+  updateChart(speakerChanges);
 };
 
 const process_event_transcript_custom = function(el_parsed) {
