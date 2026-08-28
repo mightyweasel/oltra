@@ -57,12 +57,12 @@ dropZone.addEventListener("dragleave", function() { dropZone.classList.remove("d
 dropZone.addEventListener("drop", function(event) { event.preventDefault(); dropZone.classList.remove("dragging"); const file = event.dataTransfer.files[0]; load_json(file); });
 
 const make_transcript_entry = function(item) {
-  return `<p>
+  return `<hr /><p>
     <kbd>${item.language} ${ item.amount != null ? format_duration(item.amount) : "--" }</kbd>
-    <em>${item.text}</em> 
+    <em>${item.text}</em><br /> 
     <small>[${ item.start != null ? format_duration(item.start) : "--" } - ${ item.end != null ? format_duration(item.end) : "--" }]</small>
     <sub>— ${item.speaker}</sub>
-    </p><hr />`;
+    </p>`;
 };
 
 const make_analysis_entry = function(item) {
@@ -111,27 +111,39 @@ const format_percent = function(item){
   return `${item.toFixed(2)}%`;
 };
 
-const format_LES = function(item){
+const format_LES = function(item,mode){
+  if(mode === "undefined") { mode = "default"; }
   let LES_ranges = {
     "Excellent": "<strong>Excellent Baseline:</strong> Highly balanced. Proves robust bilingual integration across the event agenda.",
     "Acceptable": "<strong>Acceptable Compliance:</strong> Satisfactory. One language slightly dominated, but both communities had significant, active platforms.",
     "Imbalance": "<strong>Linguistic Imbalance:</strong> Marginal compliance. Indicates that the event leaned heavily unilingual."
   };
   let LES = 1.0 - (2.0 * (Math.abs((item.enAmount/(item.enAmount + item.frAmount))-0.5)));
+  let LES_rank = "";
   let LES_summary = "";
   if(LES >= 0.85) {
+    LES_rank = "Excellent";
     LES_summary = LES_ranges["Excellent"];
   } else if(LES < 0.85 && LES >= 0.70) {
+    LES_rank = "Acceptable";
     LES_summary = LES_ranges["Acceptable"];
   } else if(LES < 0.70) {
+    LES_rank = "Imbalance";
     LES_summary = LES_ranges["Imbalance"];
   }
-  return `<kbd>🎯Language Equilibrium Score ${LES.toFixed(2)}</kbd><blockquote>${LES_summary}</blockquote>`;
+  let htmlReturn = "";
+  if(mode == "badge") {
+    htmlReturn = `<mark>🎯LES ${LES.toFixed(2)} ${LES_rank}</mark>`;
+  } else {
+    htmlReturn = `<blockquote><kbd>🎯Language Equilibrium Score ${LES.toFixed(2)}</kbd><br />${LES_summary}</blockquote>`;
+  }
+  return htmlReturn; 
 };
 
 const generate_metrics = function(result) {
   let enAmount = 0;
   let frAmount = 0;
+  let runningAmount = 0;
   const speakerMetrics = {};
 
   result.forEach((item) => {
@@ -145,7 +157,8 @@ const generate_metrics = function(result) {
     if (!speakerMetrics[item.speaker]) { speakerMetrics[item.speaker] = { en: 0, fr: 0, total: 0 }; }
     if (item.language === "en") { enAmount += amount; speakerMetrics[item.speaker].en += amount; speakerMetrics[item.speaker].total += amount; } 
     else if (item.language === "fr") { frAmount += amount; speakerMetrics[item.speaker].fr += amount; speakerMetrics[item.speaker].total += amount; }
-    
+    runningAmount += amount;
+    transcript_frame.insertAdjacentHTML("beforeend", format_LES({ "enAmount": enAmount, "frAmount": frAmount, "total": runningAmount },"badge"));
   });
 
   const total = enAmount + frAmount;
