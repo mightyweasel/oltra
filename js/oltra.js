@@ -13,7 +13,7 @@
 
 const chart = echarts.init(document.getElementById('chart'));
 const data = [];
-const addMetric = function(seconds, les, speaker) { data.push([seconds, les, speaker]); }
+const addMetric = function(seconds, les, speaker, lang) { data.push([seconds, les, speaker, lang]); }
 const time = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
 const display_chart = function() { document.getElementById('chart').style.display = 'block'; requestAnimationFrame(() => chart.resize()); };
 const hide_chart = function() { document.getElementById('chart').style.display='none'; };
@@ -48,11 +48,11 @@ chart.setOption({
     axisPointer: { type: 'line' },
     formatter: p => {
       const index = p[0].dataIndex;
-      const [seconds, les, speaker] = data[index];
+      const [seconds, les, speaker, lang] = data[index];
       const status = les >= 0.85 ? 'Excellent'
                    : les >= 0.7 ? 'Acceptable'
                    : 'Imbalance';
-      return `${time(seconds.toFixed(0))}<br />${speaker}<br />LES: <b>${les}</b> — ${status}`;
+      return `${time(seconds.toFixed(0))}<br />${speaker} (${lang})<br />LES: <b>${les}</b> — ${status}`;
     }
   },
   grid: { left: 55, right: 20, top: 35, bottom: 45 },
@@ -246,7 +246,7 @@ const generate_metrics = function(result) {
     }
     
     runningAmount += amount;
-    addMetric(runningAmount, calculate_LES({ "enAmount": enAmount, "frAmount": frAmount }).toFixed(2), item.speaker);
+    addMetric(runningAmount, calculate_LES({ "enAmount": enAmount, "frAmount": frAmount }).toFixed(2), item.speaker, item.language);
 
     transcript_frame.insertAdjacentHTML("beforeend", format_LES({ "enAmount": enAmount, "frAmount": frAmount, "total": runningAmount },"badge"));
   });
