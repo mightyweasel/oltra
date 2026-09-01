@@ -1,22 +1,16 @@
 // 11 Labs Default Formats https://elevenlabs.io/docs/eleven-api/guides/how-to/speech-to-text/batch/multichannel-transcription
 // Custom format based on event transcript format provided by user
 // Lang detection via ELD
-/* https://github.com/nitotm/efficient-language-detector-js/tree/main
-  const detector = eld.newInstance() // Isolated configuration instance. (Instances introduced in v2.1.0)
-  console.log( detector.detect('Hola, cómo te llamas?') )
-  // { language: 'es', getScores(): {'es': 0.5, 'et': 0.2}, isReliable(): true }
-  // returns { language: string, getScores(): Object, isReliable(): boolean } 
-  console.log( detector.detect('Hola, cómo te llamas?').language )
-  // 'es'
-  alert("Custom Process");
-*/
+// https://github.com/nitotm/efficient-language-detector-js/tree/main
 
 const chart = echarts.init(document.getElementById('chart'));
+const languageTimelineChart = echarts.init(document.getElementById('language-timeline'));
+
 const data = [];
 const addMetric = function(seconds, les, speaker, lang) { data.push([seconds, les, speaker, lang]); }
 const time = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
-const display_chart = function() { document.getElementById('chart').style.display = 'block'; requestAnimationFrame(() => chart.resize()); };
-const hide_chart = function() { document.getElementById('chart').style.display='none'; };
+const display_chart = function() { document.getElementById('chart').style.display = 'block';  document.getElementById('language-timeline').style.display = 'block'; requestAnimationFrame(() => { chart.resize(); languageTimelineChart.resize(); }); };
+const hide_chart = function() { document.getElementById('chart').style.display='none'; document.getElementById('language-timeline').style.display='none'; };
 hide_chart();
 const updateChart = function(speakerChanges) {
   const displayData = data.map(([x, y, z]) => [x, Math.max(y, 0.5), z]);
@@ -25,8 +19,7 @@ const updateChart = function(speakerChanges) {
     series: [{ 
       data: displayData,
       markLine: {
-        symbol: ['none', 'none'],
-        silent: false,
+        symbol: ['none', 'none'], silent: false,
         lineStyle: {
           color: '#2563eb', width: 1, type: 'dashed'
         },
@@ -44,8 +37,7 @@ const updateChart = function(speakerChanges) {
 };
 chart.setOption({
   tooltip: {
-    trigger: 'axis',
-    axisPointer: { type: 'line' },
+    trigger: 'axis', axisPointer: { type: 'line' },
     formatter: p => {
       const index = p[0].dataIndex;
       const [seconds, les, speaker, lang] = data[index];
@@ -58,7 +50,7 @@ chart.setOption({
   grid: { left: 55, right: 20, top: 35, bottom: 45 },
   xAxis: {
     type: 'value', min: 0,
-    name: 'Speaking Time', nameLocation: 'middle', nameGap: 30,
+    //name: 'Speaking Time', nameLocation: 'middle', nameGap: 30,
     axisLabel: { formatter: time }
   },
   yAxis: {
@@ -66,9 +58,7 @@ chart.setOption({
     name: 'Language Equilibrium', nameLocation: 'middle', nameGap: 40
   },
   series: [{
-    type: 'line',
-    data,
-    smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#2563eb' },
+    type: 'line', data, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#2563eb' },
     markArea: {
       silent: true, itemStyle: { opacity: .12 },
       data: [
@@ -79,8 +69,107 @@ chart.setOption({
     }
   }]
 });
-addEventListener('resize', () => chart.resize());
-window.addEventListener('beforeprint', () => { chart.resize(); });
+
+const updateLanguageTimeline = function(result) {
+  const segments = [];
+  let runningAmount = 0;
+
+  result.forEach(item => {
+    if ((item.language !== 'en' && item.language !== 'fr') ||
+      item.start == null || item.end == null ||
+      item.end <= item.start) {
+      return;
+    }
+
+    const amount = item.end - item.start;
+    const startAirtime = runningAmount;
+    const endAirtime = runningAmount + amount;
+
+    segments.push({
+      start: startAirtime, end: endAirtime, amount: amount,
+      language: item.language, speaker: item.speaker,
+      //text: item.text,
+      //actualStart: item.start,
+      //actualEnd: item.end
+    });
+
+    runningAmount = endAirtime;
+  });
+
+  languageTimelineChart.setOption({
+    animation: false,
+    xAxis: { 
+      max: data.length ? data.at(-1)[0].toFixed(0) : 0,
+      axisLabel: { formatter: time },
+      name: 'Speaking Time', nameLocation: 'middle', nameGap: 30
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: params => {
+        const item = params.data;
+
+        return `
+          <strong>${item.language === 'en' ? 'English' : 'French'}</strong><br>
+          Airtime: ${time(item.start.toFixed(0))} – ${time(item.end.toFixed(0))}<br>
+          Duration: <strong>${format_duration(item.amount)}</strong><br>
+          Speaker: ${item.speaker}<br>
+        `;
+      }
+    },
+    grid: {
+      left: 55, right: 20, top: 20, bottom: 45
+    },
+    yAxis: {
+      name: 'Speaking', nameLocation: 'middle', nameGap: 40,
+      type: 'category', data: ['EN', 'FR'], inverse: true,
+      axisTick: {
+        show: false
+      }
+    },
+    series: [{
+      type: 'custom',
+      renderItem: function(params, api) {
+        const start = api.value(0);
+        const end = api.value(1);
+        const category = api.value(2);
+        const startCoord = api.coord([start, category]);
+        const endCoord = api.coord([end, category]);
+        const height = api.size([0, 1])[1] * 0.55;
+
+        return {
+          type: 'rect',
+          shape: {
+            x: startCoord[0], y: startCoord[1] - height / 2,
+            width: Math.max(endCoord[0] - startCoord[0], 2), height: height,
+            r: 3
+          },
+          style: { fill: category === 0 ? '#ef4444' : '#2563eb', opacity: 0.85 }
+        };
+      },
+      encode: {
+        x: [0, 1],
+        y: 2
+      },
+      data: segments.map(item => ({
+        value: [
+          item.start, item.end,
+          item.language === 'en' ? 0 : 1
+        ],
+        language: item.language,
+        speaker: item.speaker,
+        //text: item.text,
+        start: item.start,
+        end: item.end,
+        amount: item.amount,
+        //actualStart: item.actualStart,
+        //actualEnd: item.actualEnd
+      }))
+    }]
+  });
+};
+
+addEventListener('resize', () => { chart.resize(); languageTimelineChart.resize(); });
+window.addEventListener('beforeprint', () => { chart.resize(); languageTimelineChart.resize(); });
 
 const detector = eld.newInstance();
 detector.setLanguageSubset(['en', 'fr']);
@@ -257,6 +346,7 @@ const generate_metrics = function(result) {
   
   analysis_frame.insertAdjacentHTML("beforeend", make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics }));
   updateChart(speakerChanges);
+  updateLanguageTimeline(result);
 };
 
 const process_event_transcript_custom = function(el_parsed) {
