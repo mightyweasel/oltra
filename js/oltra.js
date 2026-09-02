@@ -4,12 +4,23 @@
 
 const chart = echarts.init(document.getElementById('chart'));
 const languageTimelineChart = echarts.init(document.getElementById('language-timeline'));
+const speakerTimelineChart = echarts.init(document.getElementById('speaker-timeline'));
 
 const data = [];
 const add_metric = function(seconds, les, speaker, lang) { data.push([seconds, les, speaker, lang]); }
 const time = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
-const display_chart = function() { document.getElementById('chart').style.display = 'block';  document.getElementById('language-timeline').style.display = 'block'; requestAnimationFrame(() => { chart.resize(); languageTimelineChart.resize(); }); };
-const hide_chart = function() { document.getElementById('chart').style.display='none'; document.getElementById('language-timeline').style.display='none'; };
+const chart_grid = { left: 60,  right: 20,  top: 35,  bottom: 45 };
+const display_chart = function() { 
+  document.getElementById('chart').style.display = 'block'; 
+  document.getElementById('language-timeline').style.display = 'block'; 
+  document.getElementById('speaker-timeline').style.display = 'block'; 
+  requestAnimationFrame(() => { chart.resize(); languageTimelineChart.resize(); speakerTimelineChart.resize(); }); 
+};
+const hide_chart = function() { 
+  document.getElementById('chart').style.display='none'; 
+  document.getElementById('language-timeline').style.display='none'; 
+  document.getElementById('speaker-timeline').style.display='none'; 
+};
 hide_chart();
 const update_chart = function(speakerChanges) {
   const displayData = data.map(([x, y, z]) => [x, Math.max(y, 0.5), z]);
@@ -41,9 +52,9 @@ chart.setOption({
       return `${time(seconds.toFixed(0))}<br />${speaker} (${lang})<br />LES: <b>${les}</b> — ${status}`;
     }
   },
-  grid: { left: 55, right: 20, top: 35, bottom: 45 },
+  grid: chart_grid,//{ left: 55, right: 20, top: 35, bottom: 45 },
   xAxis: { type: 'value', min: 0, axisLabel: { formatter: time } }, //name: 'Speaking Time', nameLocation: 'middle', nameGap: 30,
-  yAxis: { type: 'value', min: 0.5, max: 1, name: 'Language Equilibrium', nameLocation: 'middle', nameGap: 40 },
+  yAxis: { type: 'value', min: 0.5, max: 1, name: 'Equilibrium', nameLocation: 'middle', nameGap: 40, nameTextStyle: { fontWeight: 'bold' } },
   series: [{
     type: 'line', data, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#2563eb' },
     markArea: {
@@ -73,8 +84,8 @@ const update_language_timeline = function(result) {
   languageTimelineChart.setOption({
     animation: false,
     xAxis: { 
-      max: data.length ? data.at(-1)[0].toFixed(0) : 0, axisLabel: { formatter: time },
-      name: 'Speaking Time', nameLocation: 'middle', nameGap: 30
+      max: data.length ? data.at(-1)[0].toFixed(0) : 0, axisLabel: { formatter: time }//,
+      //name: 'Speaking Time', nameLocation: 'middle', nameGap: 30
     },
     tooltip: {
       trigger: 'item',
@@ -84,8 +95,8 @@ const update_language_timeline = function(result) {
           Duration: <strong>${format_duration(item.amount)}</strong><br>Speaker: ${item.speaker}<br>`;
       }
     },
-    grid: { left: 55, right: 20, top: 20, bottom: 45 },
-    yAxis: { name: 'Speaking', nameLocation: 'middle', nameGap: 40, type: 'category', data: ['EN', 'FR'], inverse: true, axisTick: { show: false } },
+    grid: chart_grid,//{ left: 55, right: 20, top: 20, bottom: 45 },
+    yAxis: { name: 'Language', nameLocation: 'middle', nameGap: 40, type: 'category', data: ['EN', 'FR'], inverse: true, axisTick: { show: false }, nameTextStyle: { fontWeight: 'bold' } },
     series: [{
       type: 'custom',
       renderItem: function(params, api) {
@@ -101,7 +112,7 @@ const update_language_timeline = function(result) {
           shape: {
             x: startCoord[0], y: startCoord[1] - height / 2,
             width: Math.max(endCoord[0] - startCoord[0], 2), height: height,
-            r: 3
+            r: 0//3
           },
           style: { fill: category === 0 ? '#ef4444' : '#2563eb', opacity: 0.85 }
         };
@@ -115,8 +126,76 @@ const update_language_timeline = function(result) {
   });
 };
 
-addEventListener('resize', () => { chart.resize(); languageTimelineChart.resize(); });
-window.addEventListener('beforeprint', () => { chart.resize(); languageTimelineChart.resize(); });
+const get_initials = name => name.trim().split(/\s+/).map(part => part[0].toUpperCase()).join('');
+const get_initials_twochar = name => { const parts = name.trim().split(/\s+/); return (parts[0][0] + parts.at(-1)[0]).toUpperCase(); };
+const random_color_fast = '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+
+const update_speaker_timeline = function(result) {
+  const segments = [];
+  let runningAmount = 0;
+
+  result.forEach(item => {
+    if ((item.language !== 'en' && item.language !== 'fr') || item.start == null || item.end == null || item.end <= item.start) { return; }
+    const amount = item.end - item.start;
+    const startAirtime = runningAmount;
+    const endAirtime = runningAmount + amount;
+    segments.push({ start: startAirtime, end: endAirtime, amount: amount, language: item.language, speaker: item.speaker });
+    runningAmount = endAirtime;
+  });
+
+  speakerTimelineChart.setOption({
+    animation: false,
+    xAxis: { 
+      max: data.length ? data.at(-1)[0].toFixed(0) : 0, axisLabel: { formatter: time },
+      axisLine: { show: true },
+      name: 'Speaking Time', nameLocation: 'middle', nameGap: 30, nameTextStyle: { fontWeight: 'bold' } 
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: params => {
+        const item = params.data;
+        return `<strong>${item.language === 'en' ? 'English' : 'French'}</strong><br>Airtime: ${time(item.start.toFixed(0))} - ${time(item.end.toFixed(0))}<br>
+          Duration: <strong>${format_duration(item.amount)}</strong><br>Speaker: ${item.speaker}<br>`;
+      }
+    },
+    grid: chart_grid,//{ left: 55, right: 20, top: 20, bottom: 45 },
+    yAxis: { name: 'Speaker', nameLocation: 'middle', //nameGap: 40, 
+      type: 'category', 
+      inverse: true, axisTick: { show: false },
+      nameTextStyle: { fontWeight: 'bold' }, 
+      axisLabel: { formatter: value => get_initials_twochar(value) }
+    },
+    series: [{
+      type: 'custom',
+      renderItem: function(params, api) {
+        const start = api.value(0);
+        const end = api.value(1);
+        const category = api.value(2);
+        const startCoord = api.coord([start, category]);
+        const endCoord = api.coord([end, category]);
+        const height = api.size([0, 1])[1] * 0.55;
+
+        return {
+          type: 'rect',
+          shape: {
+            x: startCoord[0], y: startCoord[1] - height / 2,
+            width: Math.max(endCoord[0] - startCoord[0], 2), height: height,
+            r: 0//3
+          },
+          style: { fill: '#276978', opacity: 0.85 }
+        };
+      },
+      encode: { x: [0, 1], y: 2 },
+      data: segments.map(item => ({
+        value: [ item.start, item.end, item.speaker],//item.language === 'en' ? 0 : 1 ],
+        language: item.language, speaker: item.speaker, start: item.start, end: item.end, amount: item.amount
+      }))
+    }]
+  });
+};
+
+addEventListener('resize', () => { chart.resize(); languageTimelineChart.resize(); speakerTimelineChart.resize(); });
+window.addEventListener('beforeprint', () => { chart.resize(); languageTimelineChart.resize(); speakerTimelineChart.resize(); });
 
 const detector = eld.newInstance();
 detector.setLanguageSubset(['en', 'fr']);
@@ -127,12 +206,8 @@ const transcript_frame = document.getElementById("otranscript");
 const analysis_frame = document.getElementById("oanalysis");
 const file_frame = document.getElementById("ofile");
 
-const display_error = function() {
-  document.getElementById('error-alert').style.display='block';
-};
-const dismiss_error = function() {
-  document.getElementById('error-alert').style.display='none';
-};
+const display_error = function() { document.getElementById('error-alert').style.display='block'; };
+const dismiss_error = function() { document.getElementById('error-alert').style.display='none'; };
 const clear_analysis = function() {
   transcript_frame.innerHTML = "";
   analysis_frame.innerHTML = "";
@@ -289,6 +364,7 @@ const generate_metrics = function(result) {
   analysis_frame.insertAdjacentHTML("beforeend", make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics }));
   update_chart(speakerChanges);
   update_language_timeline(result);
+  update_speaker_timeline(result);
 };
 
 const process_event_transcript_custom = function(el_parsed) {

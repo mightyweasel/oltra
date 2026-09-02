@@ -41,7 +41,13 @@
 #language-timeline {
   width: 100%;
   height: 120px;
-  margin-top:-30px;
+  margin-top:-50px;
+  margin-bottom:30px;
+}
+#speaker-timeline {
+  width: 100%;
+  height: 150px;
+  margin-top:-80px;
   margin-bottom:30px;
 }
 
@@ -67,8 +73,23 @@
     width: 100% !important;
     height: 220px !important;
   }
+  #language-timeline {
+    width: 100% !important;
+    height: 150px !important;
+    margin-top:-50px;
+    margin-bottom:30px;
+  }
+  #speaker-timeline {
+    width: 100% !important;
+    height: 150px !important;
+    margin-top:-80px;
+    margin-bottom:30px;
+  }
 
   #drop-zone {
+    display: none;
+  }
+  #otranscript {
     display: none;
   }
 }
