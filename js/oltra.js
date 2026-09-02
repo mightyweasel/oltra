@@ -10,6 +10,10 @@ const data = [];
 const add_metric = function(seconds, les, speaker, lang) { data.push([seconds, les, speaker, lang]); }
 const time = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
 const chart_grid = { left: 60,  right: 20,  top: 35,  bottom: 45 };
+const is_closed_caption_text = function(text) {
+   return (text.trim().slice(0,1) === "[" && ( text.trim().slice(-2) === "]." || text.trim().slice(-1) === "]"));
+}
+
 const display_chart = function() { 
   document.getElementById('chart').style.display = 'block'; 
   document.getElementById('language-timeline').style.display = 'block'; 
@@ -73,7 +77,7 @@ const update_language_timeline = function(result) {
   let runningAmount = 0;
 
   result.forEach(item => {
-    if ((item.language !== 'en' && item.language !== 'fr') || item.start == null || item.end == null || item.end <= item.start) { return; }
+    if (is_closed_caption_text(item.text) == true || (item.language !== 'en' && item.language !== 'fr') || item.start == null || item.end == null || item.end <= item.start) { return; }
     const amount = item.end - item.start;
     const startAirtime = runningAmount;
     const endAirtime = runningAmount + amount;
@@ -135,7 +139,7 @@ const update_speaker_timeline = function(result) {
   let runningAmount = 0;
 
   result.forEach(item => {
-    if ((item.language !== 'en' && item.language !== 'fr') || item.start == null || item.end == null || item.end <= item.start) { return; }
+    if (is_closed_caption_text(item.text) == true || (item.language !== 'en' && item.language !== 'fr') || item.start == null || item.end == null || item.end <= item.start) { return; }
     const amount = item.end - item.start;
     const startAirtime = runningAmount;
     const endAirtime = runningAmount + amount;
@@ -247,6 +251,9 @@ const make_transcript_entry = function(item) {
 
 const make_analysis_entry = function(item) {
   let speakerMetricsHTML = "";
+  let speaker_chart_height_multiplier = Math.ceil(Object.entries(item.speakerMetrics).length / 5);
+  document.querySelector('#speaker-timeline').style.setProperty('--height-multiplier', speaker_chart_height_multiplier);
+
   for (const [speaker, { en, fr, total }] of Object.entries(item.speakerMetrics)) {
     speakerMetricsHTML += `<tr>
       <th scope="row"><small>${speaker}</small></th>
@@ -335,6 +342,11 @@ const generate_metrics = function(result) {
   const speakerChanges = [];
 
   result.forEach((item, index) => {
+   
+    if(is_closed_caption_text(item.text) == true) {
+      return;
+    }
+
     const amount = (item.end != null && item.start != null) ? (item.end - item.start) : 0;
     transcript_frame.insertAdjacentHTML("beforeend", 
       make_transcript_entry({
