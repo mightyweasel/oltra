@@ -1,18 +1,17 @@
 // 11 Labs Default Formats https://elevenlabs.io/docs/eleven-api/guides/how-to/speech-to-text/batch/multichannel-transcription
 // Custom format based on event transcript format provided by user
-// Lang detection via ELD
-// https://github.com/nitotm/efficient-language-detector-js/tree/main
+// Lang detection via ELD https://github.com/nitotm/efficient-language-detector-js/tree/main
 
 const chart = echarts.init(document.getElementById('chart'));
 const languageTimelineChart = echarts.init(document.getElementById('language-timeline'));
 
 const data = [];
-const addMetric = function(seconds, les, speaker, lang) { data.push([seconds, les, speaker, lang]); }
+const add_metric = function(seconds, les, speaker, lang) { data.push([seconds, les, speaker, lang]); }
 const time = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
 const display_chart = function() { document.getElementById('chart').style.display = 'block';  document.getElementById('language-timeline').style.display = 'block'; requestAnimationFrame(() => { chart.resize(); languageTimelineChart.resize(); }); };
 const hide_chart = function() { document.getElementById('chart').style.display='none'; document.getElementById('language-timeline').style.display='none'; };
 hide_chart();
-const updateChart = function(speakerChanges) {
+const update_chart = function(speakerChanges) {
   const displayData = data.map(([x, y, z]) => [x, Math.max(y, 0.5), z]);
   chart.setOption({
     xAxis: { max: data.length ? data.at(-1)[0].toFixed(0) : 0 },
@@ -20,13 +19,8 @@ const updateChart = function(speakerChanges) {
       data: displayData,
       markLine: {
         symbol: ['none', 'none'], silent: false,
-        lineStyle: {
-          color: '#2563eb', width: 1, type: 'dashed'
-        },
-        label: {
-          show: true, position: 'insideEndTop',
-          formatter: params => params.name
-        },
+        lineStyle: { color: '#2563eb', width: 1, type: 'dashed' },
+        label: { show: true, position: 'insideEndTop', formatter: params => params.name },
         data: speakerChanges.map(([x, y, speaker]) => ({
           xAxis: x //,name: speaker
         }))
@@ -48,15 +42,8 @@ chart.setOption({
     }
   },
   grid: { left: 55, right: 20, top: 35, bottom: 45 },
-  xAxis: {
-    type: 'value', min: 0,
-    //name: 'Speaking Time', nameLocation: 'middle', nameGap: 30,
-    axisLabel: { formatter: time }
-  },
-  yAxis: {
-    type: 'value', min: 0.5, max: 1,
-    name: 'Language Equilibrium', nameLocation: 'middle', nameGap: 40
-  },
+  xAxis: { type: 'value', min: 0, axisLabel: { formatter: time } }, //name: 'Speaking Time', nameLocation: 'middle', nameGap: 30,
+  yAxis: { type: 'value', min: 0.5, max: 1, name: 'Language Equilibrium', nameLocation: 'middle', nameGap: 40 },
   series: [{
     type: 'line', data, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#2563eb' },
     markArea: {
@@ -70,62 +57,35 @@ chart.setOption({
   }]
 });
 
-const updateLanguageTimeline = function(result) {
+const update_language_timeline = function(result) {
   const segments = [];
   let runningAmount = 0;
 
   result.forEach(item => {
-    if ((item.language !== 'en' && item.language !== 'fr') ||
-      item.start == null || item.end == null ||
-      item.end <= item.start) {
-      return;
-    }
-
+    if ((item.language !== 'en' && item.language !== 'fr') || item.start == null || item.end == null || item.end <= item.start) { return; }
     const amount = item.end - item.start;
     const startAirtime = runningAmount;
     const endAirtime = runningAmount + amount;
-
-    segments.push({
-      start: startAirtime, end: endAirtime, amount: amount,
-      language: item.language, speaker: item.speaker,
-      //text: item.text,
-      //actualStart: item.start,
-      //actualEnd: item.end
-    });
-
+    segments.push({ start: startAirtime, end: endAirtime, amount: amount, language: item.language, speaker: item.speaker });
     runningAmount = endAirtime;
   });
 
   languageTimelineChart.setOption({
     animation: false,
     xAxis: { 
-      max: data.length ? data.at(-1)[0].toFixed(0) : 0,
-      axisLabel: { formatter: time },
+      max: data.length ? data.at(-1)[0].toFixed(0) : 0, axisLabel: { formatter: time },
       name: 'Speaking Time', nameLocation: 'middle', nameGap: 30
     },
     tooltip: {
       trigger: 'item',
       formatter: params => {
         const item = params.data;
-
-        return `
-          <strong>${item.language === 'en' ? 'English' : 'French'}</strong><br>
-          Airtime: ${time(item.start.toFixed(0))} – ${time(item.end.toFixed(0))}<br>
-          Duration: <strong>${format_duration(item.amount)}</strong><br>
-          Speaker: ${item.speaker}<br>
-        `;
+        return `<strong>${item.language === 'en' ? 'English' : 'French'}</strong><br>Airtime: ${time(item.start.toFixed(0))} - ${time(item.end.toFixed(0))}<br>
+          Duration: <strong>${format_duration(item.amount)}</strong><br>Speaker: ${item.speaker}<br>`;
       }
     },
-    grid: {
-      left: 55, right: 20, top: 20, bottom: 45
-    },
-    yAxis: {
-      name: 'Speaking', nameLocation: 'middle', nameGap: 40,
-      type: 'category', data: ['EN', 'FR'], inverse: true,
-      axisTick: {
-        show: false
-      }
-    },
+    grid: { left: 55, right: 20, top: 20, bottom: 45 },
+    yAxis: { name: 'Speaking', nameLocation: 'middle', nameGap: 40, type: 'category', data: ['EN', 'FR'], inverse: true, axisTick: { show: false } },
     series: [{
       type: 'custom',
       renderItem: function(params, api) {
@@ -146,23 +106,10 @@ const updateLanguageTimeline = function(result) {
           style: { fill: category === 0 ? '#ef4444' : '#2563eb', opacity: 0.85 }
         };
       },
-      encode: {
-        x: [0, 1],
-        y: 2
-      },
+      encode: { x: [0, 1], y: 2 },
       data: segments.map(item => ({
-        value: [
-          item.start, item.end,
-          item.language === 'en' ? 0 : 1
-        ],
-        language: item.language,
-        speaker: item.speaker,
-        //text: item.text,
-        start: item.start,
-        end: item.end,
-        amount: item.amount,
-        //actualStart: item.actualStart,
-        //actualEnd: item.actualEnd
+        value: [ item.start, item.end, item.language === 'en' ? 0 : 1 ],
+        language: item.language, speaker: item.speaker, start: item.start, end: item.end, amount: item.amount
       }))
     }]
   });
@@ -174,8 +121,8 @@ window.addEventListener('beforeprint', () => { chart.resize(); languageTimelineC
 const detector = eld.newInstance();
 detector.setLanguageSubset(['en', 'fr']);
 
-const fileInput = document.getElementById("json-file");
-const dropZone = document.getElementById("drop-zone");
+const file_input = document.getElementById("json-file");
+const drop_zone = document.getElementById("drop-zone");
 const transcript_frame = document.getElementById("otranscript");
 const analysis_frame = document.getElementById("oanalysis");
 const file_frame = document.getElementById("ofile");
@@ -198,26 +145,21 @@ async function load_json(file) {
   if (!file) { return; }
   try {
     const text = await file.text();
-    const parse_format = document.querySelector('input[name="parse-format"]:checked')?.value;
-    
     let el_parsed = JSON.parse(text);
-    if(parse_format == "el_custom") {
-      if (!Array.isArray(el_parsed.segments)) { throw new Error("Invalid transcript format: 'segments' array not found."); }
-      process_event_transcript_custom(el_parsed);
-    } else if(parse_format == "el_default") {
-      if (!Array.isArray(el_parsed.transcripts)) { throw new Error("Invalid transcript format: 'transcripts' array not found."); }
-      process_event_transcript_default(el_parsed);
-    }
+    if (Array.isArray(el_parsed.segments)) { process_event_transcript_custom(el_parsed); } 
+    else if (Array.isArray(el_parsed.transcripts)) { process_event_transcript_default(el_parsed); }
+    else { throw new Error("Invalid transcript format: Expected structures not found."); }
+    
     file_frame.innerHTML = `<h2>📑 ${file.name}</h2>`;
   } catch (error) {
     console.error(error);
     display_error();
   }
 };
-fileInput.addEventListener("change", function(event) { load_json(event.target.files[0]); });
-dropZone.addEventListener("dragover", function(event) { event.preventDefault(); dropZone.classList.add("dragging"); });
-dropZone.addEventListener("dragleave", function() { dropZone.classList.remove("dragging"); });
-dropZone.addEventListener("drop", function(event) { event.preventDefault(); dropZone.classList.remove("dragging"); const file = event.dataTransfer.files[0]; load_json(file); });
+file_input.addEventListener("change", function(event) { load_json(event.target.files[0]); });
+drop_zone.addEventListener("dragover", function(event) { event.preventDefault(); drop_zone.classList.add("dragging"); });
+drop_zone.addEventListener("dragleave", function() { drop_zone.classList.remove("dragging"); });
+drop_zone.addEventListener("drop", function(event) { event.preventDefault(); drop_zone.classList.remove("dragging"); const file = event.dataTransfer.files[0]; load_json(file); });
 
 const make_transcript_entry = function(item) {
   return `<hr /><p>
@@ -335,7 +277,7 @@ const generate_metrics = function(result) {
     }
     
     runningAmount += amount;
-    addMetric(runningAmount, calculate_LES({ "enAmount": enAmount, "frAmount": frAmount }).toFixed(2), item.speaker, item.language);
+    add_metric(runningAmount, calculate_LES({ "enAmount": enAmount, "frAmount": frAmount }).toFixed(2), item.speaker, item.language);
 
     transcript_frame.insertAdjacentHTML("beforeend", format_LES({ "enAmount": enAmount, "frAmount": frAmount, "total": runningAmount },"badge"));
   });
@@ -345,8 +287,8 @@ const generate_metrics = function(result) {
   const frPercent = (frAmount / total) * 100;
   
   analysis_frame.insertAdjacentHTML("beforeend", make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics }));
-  updateChart(speakerChanges);
-  updateLanguageTimeline(result);
+  update_chart(speakerChanges);
+  update_language_timeline(result);
 };
 
 const process_event_transcript_custom = function(el_parsed) {
@@ -370,7 +312,6 @@ const process_event_transcript_default = function(el_parsed) {
   dismiss_error();
 
   const result = el_parsed.transcripts.map(transcript => {
-    //const words = transcript.words.filter(word => word.type === "word");
     const words = (transcript.words ?? []).filter(word => word.type === "word");
     return {
       text: transcript.text,
