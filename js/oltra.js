@@ -207,6 +207,7 @@ detector.setLanguageSubset(['en', 'fr']);
 const file_input = document.getElementById("json-file");
 const drop_zone = document.getElementById("drop-zone");
 const transcript_frame = document.getElementById("otranscript");
+const cc_frame = document.getElementById("cc-items");
 const analysis_frame = document.getElementById("oanalysis");
 const file_frame = document.getElementById("ofile");
 
@@ -214,6 +215,8 @@ const display_error = function() { document.getElementById('error-alert').style.
 const dismiss_error = function() { document.getElementById('error-alert').style.display='none'; };
 const clear_analysis = function() {
   transcript_frame.innerHTML = "";
+  cc_frame.innerHTML = "";
+  alt_lang = {};
   analysis_frame.innerHTML = "";
   file_frame.innerHTML = "";
   data.length = 0;
@@ -288,6 +291,36 @@ const make_analysis_entry = function(item) {
     </hgroup>`;
 };
 
+let alt_lang = { "music": 0 }; 
+const make_cc_metric = function(item){
+  const normalizedText = item.text.toLowerCase();
+  const musicChunks = ["music", "chime", "musique", "générique", "generic"];
+  const containsMusic = musicChunks.some(chunk => normalizedText.includes(chunk));
+  if(containsMusic == true) {
+    alt_lang["music"] += item.amount;
+    return;
+  }
+  
+  const speakingMatches = normalizedText.match(/\[speaking\s+([^\]]+)\]/gi) || [];
+  const languages = new Set(speakingMatches.map(match => match.replace(/^\[speaking\s+/i, "").replace(/\]$/, "").trim().toLowerCase()));
+
+  for (const language of languages) {
+    const category = `${language}`;
+    alt_lang[category] = (alt_lang[category] || 0) + item.amount;
+  }
+};
+const format_cc_summary = function() {
+  let alts_html = ``; 
+  let alts_html_music = ``; 
+  let alts_html_lang = ``;
+  if(alt_lang.music != 0) { alts_html_music = `<p><em>Music:</em> <strong>${ format_duration(alt_lang["music"]) }</strong></p>`; }
+  for (const [category, amount] of Object.entries(alt_lang)) { if (category !== "music") { 
+    alts_html_lang += `<p><em>${category.charAt(0).toUpperCase() + category.slice(1)}:</em> <strong>${format_duration(amount)}</strong></p>`; } 
+  }
+  if(alts_html_music != `` || alts_html_lang != ``) { alts_html = "<h3>Other Audio Detected</h3>" + alts_html_music + alts_html_lang; }
+  return alts_html;
+};
+
 const format_duration = function(seconds) {
   const minutes = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
@@ -340,14 +373,19 @@ const generate_metrics = function(result) {
   let runningAmount = 0;
   const speakerMetrics = {};
   const speakerChanges = [];
-
+  alt_lang = { "music": 0 }; 
+  
   result.forEach((item, index) => {
-   
+    const amount = (item.end != null && item.start != null) ? (item.end - item.start) : 0;
+
     if(is_closed_caption_text(item.text) == true) {
+        make_cc_metric({
+          text: item.text, language: item.language,
+          start: item.start, end: item.end, amount: amount, speaker: item.speaker
+        })
       return;
     }
 
-    const amount = (item.end != null && item.start != null) ? (item.end - item.start) : 0;
     transcript_frame.insertAdjacentHTML("beforeend", 
       make_transcript_entry({
         text: item.text, language: item.language,
@@ -377,6 +415,7 @@ const generate_metrics = function(result) {
   update_chart(speakerChanges);
   update_language_timeline(result);
   update_speaker_timeline(result);
+  cc_frame.insertAdjacentHTML("beforeend", format_cc_summary());
 };
 
 const process_event_transcript_custom = function(el_parsed) {
