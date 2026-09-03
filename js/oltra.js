@@ -294,7 +294,7 @@ const make_analysis_entry = function(item) {
 let alt_lang = { "music": 0 }; 
 const make_cc_metric = function(item){
   const normalizedText = item.text.toLowerCase();
-  const musicChunks = ["music", "chime", "musique", "générique", "generic"];
+  const musicChunks = ["music", "chime", "musique", "générique", "generic", "jingle"];
   const containsMusic = musicChunks.some(chunk => normalizedText.includes(chunk));
   if(containsMusic == true) {
     alt_lang["music"] += item.amount;
