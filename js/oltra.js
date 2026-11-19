@@ -56,7 +56,11 @@ const oltra = {
       if (!file) { return; }
       try {
         const text = await file.text();
-        let el_parsed = JSON.parse(text);
+        const srtBlockRegex = /^\d+\r?\n\d{2}:\d{2}:\d{2},\d{3}\s-->\s\d{2}:\d{2}:\d{2},\d{3}\r?\n.+/s;
+        const isValidSRT = srtBlockRegex.test(text);
+        let el_parsed = "";
+        if(isValidSRT) { el_parsed = oltra.tools.repack_srt_as_json(text); } 
+        else { el_parsed = JSON.parse(text); }
         if (Array.isArray(el_parsed.segments)) { oltra.calc.process_event_transcript_custom(el_parsed); } 
         else if (Array.isArray(el_parsed.transcripts)) { oltra.calc.process_event_transcript_default(el_parsed); }
         else { throw new Error("Invalid transcript format: Expected structures not found."); }
@@ -65,6 +69,31 @@ const oltra = {
         console.error(error);
         oltra.ui.display_error();
       }
+    },
+    repack_srt_timecode_sec: function toSeconds(timestamp) {
+      const [time, ms] = timestamp.split(",");
+      const [hours, minutes, seconds] = time.split(":").map(Number);
+      return (hours * 3600) + (minutes * 60) + seconds + (Number(ms) / 1000);
+    },
+    repack_srt_parse: function(srt) {
+      const blocks = srt.trim().split(/\r?\n\r?\n/);
+      return blocks.map(block => {
+        const match = block.match(
+          /^\d+\r?\n(\d{2}:\d{2}:\d{2},\d{3})\s-->\s(\d{2}:\d{2}:\d{2},\d{3})\r?\n([\s\S]+)$/
+        );
+        if (!match) return null;
+        return {
+          "start_time": oltra.tools.repack_srt_timecode_sec( match[1] ),
+          "end_time": oltra.tools.repack_srt_timecode_sec( match[2] ),
+          "text": match[3],
+          "words": [], "speaker": { "id": "SRT-T", "name": "SRT Transcript" }
+        };
+      }).filter(Boolean);    
+    },
+    repack_srt_as_json: function(srt_input){
+      let srt_json = { "language_code": "eng", "segments": [] };
+      srt_json.segments = oltra.tools.repack_srt_parse( srt_input );
+      return srt_json;
     },
     format_duration: function(seconds) {
       const minutes = Math.floor(seconds / 60);
