@@ -52,6 +52,14 @@ You can use the *custom JSON* based on 11 Labs default.
 }
 ```
 
+You can use a generic .SRT format like
+
+```json
+1
+00:00:01,200 --> 00:00:04,500
+Hello, world!
+```
+
 You can also use the default 11 labs format described here: https://elevenlabs.io/docs/eleven-api/guides/how-to/speech-to-text/batch/multichannel-transcription
 
 ```json
