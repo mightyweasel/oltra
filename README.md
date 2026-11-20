@@ -15,6 +15,23 @@ For language detection when the json file doesnt have text tagged, we lean on EL
 
 ## What formats work
 
+You can use a generic .SRT format
+
+```srt
+1
+00:00:01,200 --> 00:00:04,500
+Hello, world!
+```
+
+You can use a WebVTT format (eg. MSTeams Meeting Transcript)
+
+```webvtt
+WEBVTT
+
+00:00:01.200 --> 00:00:05.500
+<v Human Name>Hello, world!</v>
+```
+
 You can use the *custom JSON* based on 11 Labs default.
 ```json
 {
@@ -50,14 +67,6 @@ You can use the *custom JSON* based on 11 Labs default.
     ...
   ]
 }
-```
-
-You can use a generic .SRT format like
-
-```json
-1
-00:00:01,200 --> 00:00:04,500
-Hello, world!
 ```
 
 You can also use the default 11 labs format described here: https://elevenlabs.io/docs/eleven-api/guides/how-to/speech-to-text/batch/multichannel-transcription

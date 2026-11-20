@@ -56,10 +56,16 @@ const oltra = {
       if (!file) { return; }
       try {
         const text = await file.text();
+        // SRT Test
         const srtBlockRegex = /^\d+\r?\n\d{2}:\d{2}:\d{2},\d{3}\s-->\s\d{2}:\d{2}:\d{2},\d{3}\r?\n.+/s;
         const isValidSRT = srtBlockRegex.test(text);
+        // WebVTT Test
+        const vttRegex = /^WEBVTT(?:[ \t].*)?(?:\r?\n|$)[\s\S]*?\d{2}:\d{2}(?::\d{2})?\.\d{3}\s-->\s\d{2}:\d{2}(?::\d{2})?\.\d{3}/;
+        const isValidVTT = vttRegex.test(text.trimStart());
+        
         let el_parsed = "";
-        if(isValidSRT) { el_parsed = oltra.tools.repack_srt_as_json(text); } 
+        if(isValidSRT) { el_parsed = oltra.tools.repack_srt_as_json(text); }
+        else if(isValidVTT) { el_parsed = oltra.tools.repack_vtt_as_json(text); } 
         else { el_parsed = JSON.parse(text); }
         if (Array.isArray(el_parsed.segments)) { oltra.calc.process_event_transcript_custom(el_parsed); } 
         else if (Array.isArray(el_parsed.transcripts)) { oltra.calc.process_event_transcript_default(el_parsed); }
@@ -75,12 +81,17 @@ const oltra = {
       const [hours, minutes, seconds] = time.split(":").map(Number);
       return (hours * 3600) + (minutes * 60) + seconds + (Number(ms) / 1000);
     },
+    repack_vtt_timecode_sec: function(timecode) {
+      const parts = timecode.split(':');
+      let hours = 0, minutes = 0, seconds = 0;
+      if (parts.length === 3) { hours = parseInt(parts[0], 10); minutes = parseInt(parts[1], 10); seconds = parseFloat(parts[2]); } 
+      else { minutes = parseInt(parts[0], 10); seconds = parseFloat(parts[1]); }
+      return hours * 3600 + minutes * 60 + seconds;
+    },
     repack_srt_parse: function(srt) {
       const blocks = srt.trim().split(/\r?\n\r?\n/);
       return blocks.map(block => {
-        const match = block.match(
-          /^\d+\r?\n(\d{2}:\d{2}:\d{2},\d{3})\s-->\s(\d{2}:\d{2}:\d{2},\d{3})\r?\n([\s\S]+)$/
-        );
+        const match = block.match(/^\d+\r?\n(\d{2}:\d{2}:\d{2},\d{3})\s-->\s(\d{2}:\d{2}:\d{2},\d{3})\r?\n([\s\S]+)$/);
         if (!match) return null;
         return {
           "start_time": oltra.tools.repack_srt_timecode_sec( match[1] ),
@@ -90,10 +101,61 @@ const oltra = {
         };
       }).filter(Boolean);    
     },
+    repack_vtt_parse: function(vtt) {
+      const blocks = vtt.trim().replace(/^\uFEFF/, '').split(/\r?\n\r?\n/);
+      const speakers = {};
+      return blocks.map(block => {
+        if (/^(WEBVTT|NOTE|STYLE|REGION)(?:\s|$)/.test(block)) { return null; } // Skip header and metadata blocks
+        const lines = block.split(/\r?\n/);
+        const timeIndex = lines.findIndex(line => /^\d{2}:\d{2}(?::\d{2})?\.\d{3}\s+-->/.test(line)); // Locate timestamp line (cue identifiers are optional)
+        if (timeIndex === -1 || timeIndex === lines.length - 1) { return null; }
+        const match = lines[timeIndex].match(/^(\d{2}:\d{2}(?::\d{2})?\.\d{3})\s+-->\s+(\d{2}:\d{2}(?::\d{2})?\.\d{3})/);
+        if (!match) return null;
+        let caption = lines.slice(timeIndex + 1).join('\n');
+        let speakerName = null;
+        // Method 1: WebVTT voice tags: <v John Smith>
+        const voiceMatch = caption.match(/<v(?:\.[^ >]+)?\s+([^>]+)>/);
+        if (voiceMatch) {
+          speakerName = voiceMatch[1].trim();
+          caption = caption.replace(/<\/?v(?:\.[^ >]+)?(?:\s+[^>]*)?>/g, '');
+        }
+        // Method 2: Teams-style speaker prefix: John Smith: Text
+        if (!speakerName) {
+          const prefixMatch = caption.match(/^([^:\n]+):\s*/);
+          if (prefixMatch) {
+            speakerName = prefixMatch[1].trim();
+            caption = caption.replace(/^([^:\n]+):\s*/, '');
+          }
+        }
+        // Assign consistent speaker IDs
+        let speaker = { "id": "VTT-T", "name": "VTT Transcript" };
+        if (speakerName) {
+          if (!speakers[speakerName]) {
+            speakers[speakerName] = { "id": "VTT-" + (Object.keys(speakers).length + 1), "name": speakerName };
+          }
+          speaker = speakers[speakerName];
+        }
+        // Remove remaining WebVTT formatting tags
+        caption = caption.replace(/<\/?(?:b|i|u|c(?:\.[^ >]+)?|ruby|rt)(?:\s+[^>]*)?>/g, '');
+
+        return {
+          "start_time": oltra.tools.repack_vtt_timecode_sec(match[1]),
+          "end_time": oltra.tools.repack_vtt_timecode_sec(match[2]),
+          "text": caption.trim(),
+          "words": [], "speaker": speaker
+        };
+
+      }).filter(Boolean);
+    },
     repack_srt_as_json: function(srt_input){
       let srt_json = { "language_code": "eng", "segments": [] };
       srt_json.segments = oltra.tools.repack_srt_parse( srt_input );
       return srt_json;
+    },
+    repack_vtt_as_json: function(srt_input){
+      let vtt_json = { "language_code": "eng", "segments": [] };
+      vtt_json.segments = oltra.tools.repack_vtt_parse( srt_input );
+      return vtt_json;
     },
     format_duration: function(seconds) {
       const minutes = Math.floor(seconds / 60);
