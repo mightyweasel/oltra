@@ -13,6 +13,21 @@ Some basic JS and HTML/CSS and that's about it. When you drag or select a .json 
 
 For language detection when the json file doesnt have text tagged, we lean on ELD https://github.com/nitotm/efficient-language-detector-js/tree/main to determine.
 
+## Important: Interpretation of bilingual event metrics
+OLTRA provides a quantitative analysis of the English and French language distribution within the supplied event transcript or subtitle data. It measures estimated speaking time and word counts for each official language.
+
+**These measurements should not be interpreted as a direct measure of linguistic equality, message equivalence, or the quality of the bilingual experience.**
+
+- **Time is not equivalence.** Equal speaking time does not necessarily mean equal communication.
+- **Word counts are not equivalence.** English and French can communicate the same idea using different numbers of words.
+- **Context matters.** Some content takes longer to communicate in one language because of linguistic structure, terminology, or the way the message is naturally expressed.
+- **Delivery matters.** Interpretation, pauses, audience interaction, speaker transitions and presentation format can affect the experience.
+- **Human review is essential.** The report is an analytical aid, not a determination of whether an event met bilingual service or communications expectations.
+
+The results should be interpreted in the context of the event's purpose, content, format, audience, delivery approach, and the linguistic requirements of the communication.
+
+**Outputs are intended as an analytical reference to support event evaluation and informed human review. OLTRA does not independently assess whether the English and French audiences received equivalent information, context, engagement, or overall event experiences, nor does it constitute an assessment of compliance with the Official Languages Act or related Government of Canada policies. Human review and contextual assessment should accompany any conclusions drawn from these results.**
+
 ## What formats work
 
 You can use a generic .SRT format
