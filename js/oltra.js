@@ -226,6 +226,11 @@ const oltra = {
       
       return `<hgroup>
         <h3><mark>${oltra.tools.format_percent(item.enPercent)}</mark> English vs. <mark>${oltra.tools.format_percent(item.frPercent)}</mark> French</h3>
+        <small>
+          <kbd>Words</kbd> 
+          <strong>${item.enWords}</strong> English vs. <strong>${item.frWords}</strong> French 
+          [${oltra.tools.format_percent(100*(item.enWords/(item.enWords+item.frWords)))} / ${oltra.tools.format_percent(100*(item.frWords/(item.enWords+item.frWords)))}]
+        </small>
         ${oltra.ui.make_LES(item)}
         <table>
           <thead>
@@ -320,6 +325,8 @@ const oltra = {
       oltra.calc.generate_metrics(result);
     },
     generate_metrics: function(result) {
+      let enWords = 0;
+      let frWords = 0;
       let enAmount = 0;
       let frAmount = 0;
       let runningAmount = 0;
@@ -343,8 +350,8 @@ const oltra = {
           })
         );
         if (!speakerMetrics[item.speaker]) { speakerMetrics[item.speaker] = { en: 0, fr: 0, total: 0 }; }
-        if (item.language === "en") { enAmount += amount; speakerMetrics[item.speaker].en += amount; speakerMetrics[item.speaker].total += amount; } 
-        else if (item.language === "fr") { frAmount += amount; speakerMetrics[item.speaker].fr += amount; speakerMetrics[item.speaker].total += amount; }
+        if (item.language === "en") { enWords += item.text.split(/\s+/).length; enAmount += amount; speakerMetrics[item.speaker].en += amount; speakerMetrics[item.speaker].total += amount; } 
+        else if (item.language === "fr") { frWords += item.text.split(/\s+/).length; frAmount += amount; speakerMetrics[item.speaker].fr += amount; speakerMetrics[item.speaker].total += amount; }
         
         if (index > 0 && item.speaker !== result[index - 1].speaker) {
           const LES = oltra.calc.calculate_LES({ enAmount, frAmount });
@@ -360,8 +367,10 @@ const oltra = {
       const total = enAmount + frAmount;
       const enPercent = (enAmount / total) * 100;
       const frPercent = (frAmount / total) * 100;
+
+      //console.log(`English words: ${enWords}, French words: ${frWords}`);
       
-      oltra.dom.analysis_frame.insertAdjacentHTML("beforeend", oltra.ui.make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics }));
+      oltra.dom.analysis_frame.insertAdjacentHTML("beforeend", oltra.ui.make_analysis_entry({ enPercent, enAmount, frPercent, frAmount, total, speakerMetrics, enWords, frWords }));
       oltra.charting.update_chart(speakerChanges);
       oltra.charting.update_language_timeline(result);
       oltra.charting.update_speaker_timeline(result);
