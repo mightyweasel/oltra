@@ -11,20 +11,27 @@
   <body>
     <main class="container">
       <hgroup>
-        <h1>🔮 OLTRA</h1>
-        <p><small>OL Event Transcript Analysis</small></p>
+        <div role="group">
+          <div>
+            <h1 class="brand">🔮 OLTRA</h1>
+            <small data-i18n="app_subtitle">OL Event Transcript Analysis</small>
+          </div>
+          <div class="language-switch">
+            <a href="#" id="language-toggle">Français</a>
+          </div>
+        </div>
       </hgroup>
       <article id="error-alert">
         <header id="error-alert-header">
-          <span><strong>⛔ Error</strong></span>
+          <span><strong data-i18n="error_title">⛔ Error</strong></span>
           <button id="error-alert-header-button" aria-label="Close" rel="prev" onclick="document.getElementById('error-alert').style.display='none'">&times;</button>
         </header>
-        <p id="error-alert-header-p">There was a problem processing your request. Check .json file and try again.</p>
+        <p id="error-alert-header-p" data-i18n="error_message">There was a problem processing your request. Check .json file and try again.</p>
       </article>
       <form id="drop-zone">
         <fieldset class="drop-zone">
           <input type="file" id="json-file" name="json-file" accept=".json,application/json" />
-          <label for="json-file">Drag and drop files here or <kbd>browse</kbd></label>
+          <label for="json-file"><span data-i18n="upload_instructions">Drag and drop files here or</span> <kbd data-i18n="browse">browse</kbd></label>
         </fieldset>
       </form>
       <div id="ofile"></div>
@@ -35,7 +42,7 @@
       <div id="cc-items"></div>
       <div id="otranscript"></div>
       <div id="footer">
-        <sub>Outputs are intended as an analytical reference to support event evaluation and informed human review. OLTRA does not independently assess equivalent information, context, engagement, or overall event experiences, nor does it constitute an assessment of compliance.</sub>
+        <sub data-i18n="disclaimer">Outputs are intended as an analytical reference to support event evaluation and informed human review. OLTRA does not independently assess equivalent information, context, engagement, or overall event experiences, nor does it constitute an assessment of compliance.</sub>
       </div>
     </main>
     <script src="js/echarts.min.js"></script>
