@@ -14,8 +14,10 @@ const oltra = {
     oltra.dom.drop_zone.addEventListener("dragover", function(event) { event.preventDefault(); oltra.dom.drop_zone.classList.add("dragging"); });
     oltra.dom.drop_zone.addEventListener("dragleave", function() { oltra.dom.drop_zone.classList.remove("dragging"); });
     oltra.dom.drop_zone.addEventListener("drop", function(event) { event.preventDefault(); oltra.dom.drop_zone.classList.remove("dragging"); const file = event.dataTransfer.files[0]; oltra.tools.load_json(file); });
+    oltra.dom.lang_toggle.addEventListener('click', function(event) { event.preventDefault(); const nextLang = oltra.state.ui_lang === 'en' ? 'fr' : 'en'; oltra.ui.set_language(nextLang); });
     oltra.state.alt_lang = { "music": 0 }; 
     oltra.charting.set_les_timeline_options();
+    oltra.i18n.translate_ui();
   },
   dom: {
     chart: document.getElementById('chart'),
@@ -28,20 +30,98 @@ const oltra = {
     analysis_frame: document.getElementById("oanalysis"),
     file_frame: document.getElementById("ofile"),
     error_alert: document.getElementById('error-alert'),
+    lang_toggle: document.getElementById('language-toggle')
   },
   state: {
+    ui_lang: 'en',
     alt_lang: {},
     LES_calcstore: { "format_LES_previous_LES": 0 },
     data: [],
     segments_lang: [],
     segments_speaker: [],
   },
+  i18n: {
+    t: function(key) {
+      return oltra.i18n.translations[oltra.state.ui_lang]?.[key]
+        ?? oltra.i18n.translations.en[key]
+        ?? key;
+    },
+    translate_ui: function() {
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        element.textContent = oltra.i18n.t(element.dataset.i18n);
+      });
+    },
+    translations: {
+      en: {
+        app_subtitle: "OL Event Transcript Analysis",
+        error_title: "⛔ Error",
+        error_message: "There was a problem processing your request.",
+        upload_instructions: "Drag and drop files here or",
+        browse: "browse",
+        les_full: "Language Equilibrium Score",
+        les: "LES",
+        speaker: "Speaker",
+        english: "English",
+        french: "French",
+        airtime: "Airtime",
+        duration: "Duration",
+        total: "Total",
+        words: "Words",
+        speaking_time: "Speaking Time",
+        language: "Language",
+        equilibrium: "Equilibrium",
+        analysis: "Analysis",
+        other_audio: "Other Audio Detected",
+        music: "Music",
+        les_excellent: "Excellent",
+        les_excellent_full: "Excellent Baseline",
+        les_excellent_full_desc: "Highly balanced. Proves robust bilingual integration across the event agenda.",
+        les_acceptable: "Acceptable",
+        les_acceptable_full: "Acceptable Balance",
+        les_acceptable_full_desc: "Satisfactory. One language slightly dominated, but both communities had significant, active platforms.",
+        les_imbalance: "Imbalance",
+        les_imbalance_full: "Linguistic Imbalance",
+        les_imbalance_full_desc: "Marginal compliance. Indicates that the event leaned heavily unilingual.",
+        disclaimer: "Outputs are intended as an analytical reference to support event evaluation and informed human review. OLTRA does not independently assess equivalent information, context, engagement, or overall event experiences, nor does it constitute an assessment of compliance."
+      },
+      fr: {
+        app_subtitle: "Analyse des transcriptions d'événements",
+        error_title: "⛔ Erreur",
+        error_message: "Un problème est survenu lors du traitement de votre demande.",
+        upload_instructions: "Glissez-déposez vos fichiers ici ou",
+        browse: "parcourir",
+        les_full: "Score d'équilibre linguistique",
+        les: "SEL",
+        speaker: "Intervenant",
+        english: "Anglais",
+        french: "Français",
+        airtime: "Temps d'antenne",
+        duration: "Durée",
+        total: "Total",
+        words: "Mots",
+        speaking_time: "Temps de parole",
+        language: "Langue",
+        analysis: "Analyse",
+        equilibrium: "Équilibre",
+        other_audio: "Autres éléments audio détectés",
+        music: "Musique",
+        les_excellent: "Excellent",
+        les_excellent_full: "Excellente ligne de base",
+        les_excellent_full_desc: "Très équilibré. Montre une intégration bilingue robuste dans l'agenda de l'événement.",
+        les_acceptable: "Acceptable",
+        les_acceptable_full: "Équilibre acceptable",
+        les_acceptable_full_desc: "Satisfaisant. Une langue domine légèrement, mais les deux communautés ont eu des plateformes significatives et actives.",
+        les_imbalance: "Déséquilibre",
+        les_imbalance_full: "Déséquilibre linguistique",
+        les_imbalance_full_desc: "Conformité marginale. Indique que l'événement était fortement unilingue.",
+        disclaimer: "Les résultats sont destinés à servir de référence analytique pour soutenir l'évaluation des événements et la révision humaine éclairée. OLTRA n'évalue pas de manière indépendante les informations, le contexte, l'engagement ou les expériences globales de l'événement, et ne constitue pas une évaluation de la conformité."
+      }
+    },
+  },
   config: {
     chart_grid: { left: 60,  right: 20,  top: 35,  bottom: 45 },
-    LES_ranges: {
-      "Excellent": "<strong>Excellent Baseline:</strong> Highly balanced. Proves robust bilingual integration across the event agenda.",
-      "Acceptable": "<strong>Acceptable Compliance:</strong> Satisfactory. One language slightly dominated, but both communities had significant, active platforms.",
-      "Imbalance": "<strong>Linguistic Imbalance:</strong> Marginal compliance. Indicates that the event leaned heavily unilingual."
+    LES_ranges: function(les_range){ 
+      return `<strong>${oltra.i18n.t(les_range + "_full")}:</strong> ${oltra.i18n.t(les_range + "_full_desc")}`;
     },
   },
   tools: {
@@ -97,7 +177,7 @@ const oltra = {
           "start_time": oltra.tools.repack_srt_timecode_sec( match[1] ),
           "end_time": oltra.tools.repack_srt_timecode_sec( match[2] ),
           "text": match[3],
-          "words": [], "speaker": { "id": "SRT-T", "name": "SRT Transcript" }
+          "words": [], "speaker": { "id": "SRT-T", "name": "SRT" }
         };
       }).filter(Boolean);    
     },
@@ -128,7 +208,7 @@ const oltra = {
           }
         }
         // Assign consistent speaker IDs
-        let speaker = { "id": "VTT-T", "name": "VTT Transcript" };
+        let speaker = { "id": "VTT-T", "name": "VTT" };
         if (speakerName) {
           if (!speakers[speakerName]) {
             speakers[speakerName] = { "id": "VTT-" + (Object.keys(speakers).length + 1), "name": speakerName };
@@ -164,6 +244,29 @@ const oltra = {
     },
   },
   ui: {
+    set_language: function(lang) {
+      if (!oltra.i18n.translations[lang]) return;
+      oltra.state.ui_lang = lang;
+      oltra.i18n.translate_ui();
+      document.getElementById('language-toggle').textContent = lang === 'en' ? 'Français' : 'English';
+    
+      oltra.charting.cache.chart.setOption({
+        yAxis: { name: oltra.i18n.t('equilibrium') }
+      });
+      const languageChart = oltra.charting.cache.languageTimelineChart;
+      if (languageChart.getOption()?.xAxis?.length && languageChart.getOption()?.yAxis?.length) {
+        languageChart.setOption({
+          yAxis: { name: oltra.i18n.t('language') }
+        });
+      }
+      const speakerChart = oltra.charting.cache.speakerTimelineChart;
+      if (speakerChart.getOption()?.xAxis?.length && speakerChart.getOption()?.yAxis?.length) {
+        speakerChart.setOption({
+          xAxis: { name: oltra.i18n.t('speaking_time') },
+          yAxis: { name: oltra.i18n.t('speaker') }
+        });
+      }
+    },
     display_error: function() { oltra.dom.error_alert.style.display='block'; },
     dismiss_error: function() { oltra.dom.error_alert.style.display='none'; },
     display_chart: function() { 
@@ -189,11 +292,11 @@ const oltra = {
       let alts_html = ``; 
       let alts_html_music = ``; 
       let alts_html_lang = ``;
-      if(oltra.state.alt_lang.music != 0) { alts_html_music = `<p><em>Music:</em> <strong>${ oltra.tools.format_duration(oltra.state.alt_lang["music"]) }</strong></p>`; }
+      if(oltra.state.alt_lang.music != 0) { alts_html_music = `<p><em>${oltra.i18n.t('music')}:</em> <strong>${ oltra.tools.format_duration(oltra.state.alt_lang["music"]) }</strong></p>`; }
       for (const [category, amount] of Object.entries(oltra.state.alt_lang)) { if (category !== "music") { 
         alts_html_lang += `<p><em>${category.charAt(0).toUpperCase() + category.slice(1)}:</em> <strong>${oltra.tools.format_duration(amount)}</strong></p>`; } 
       }
-      if(alts_html_music != `` || alts_html_lang != ``) { alts_html = "<h3>Other Audio Detected</h3>" + alts_html_music + alts_html_lang; }
+      if(alts_html_music != `` || alts_html_lang != ``) { alts_html = `<h3>${oltra.i18n.t('other_audio')}</h3>` + alts_html_music + alts_html_lang; }
       return alts_html;
     },
     make_LES: function(item,mode){
@@ -204,9 +307,9 @@ const oltra = {
       let LES_pkg = oltra.calc.get_LES_rank(LES);
       let htmlReturn = "";
       if(mode == "badge") {
-        htmlReturn = `<mark>⚖️∆LES ${oltra.tools.formatter.format(LES_delta.toFixed(2))}</mark> <mark>🎯LES ${LES.toFixed(2)} ${LES_pkg.rank}</mark>`;
+        htmlReturn = `<mark>⚖️∆${oltra.i18n.t('les')} ${oltra.tools.formatter.format(LES_delta.toFixed(2))}</mark> <mark>🎯${oltra.i18n.t('les')} ${LES.toFixed(2)} ${LES_pkg.rank}</mark>`;
       } else {
-        htmlReturn = `<blockquote><kbd>🎯Language Equilibrium Score ${LES.toFixed(2)}</kbd><br />${LES_pkg.summary}</blockquote>`;
+        htmlReturn = `<blockquote><kbd>🎯${oltra.i18n.t('les_full')} ${LES.toFixed(2)}</kbd><br />${LES_pkg.summary}</blockquote>`;
       }
       return htmlReturn; 
     },
@@ -225,25 +328,25 @@ const oltra = {
       }
       
       return `<hgroup>
-        <h3><mark>${oltra.tools.format_percent(item.enPercent)}</mark> English vs. <mark>${oltra.tools.format_percent(item.frPercent)}</mark> French</h3>
+        <h3><mark>${oltra.tools.format_percent(item.enPercent)}</mark> ${oltra.i18n.t('english')} vs. <mark>${oltra.tools.format_percent(item.frPercent)}</mark> ${oltra.i18n.t('french')}</h3>
         <small>
-          <kbd>Words</kbd> 
-          <strong>${item.enWords}</strong> English vs. <strong>${item.frWords}</strong> French 
+          <kbd>${oltra.i18n.t('words')}</kbd> 
+          <strong>${item.enWords}</strong> ${oltra.i18n.t('english')} vs. <strong>${item.frWords}</strong> ${oltra.i18n.t('french')} 
           [${oltra.tools.format_percent(100*(item.enWords/(item.enWords+item.frWords)))} / ${oltra.tools.format_percent(100*(item.frWords/(item.enWords+item.frWords)))}]
         </small>
         ${oltra.ui.make_LES(item)}
         <table>
           <thead>
             <tr>
-              <th scope="col">Speaker</th>
-              <th scope="col">English</th>
-              <th scope="col">French</th>
-              <th scope="col">Total</th>
+              <th scope="col">${oltra.i18n.t('speaker')}</th>
+              <th scope="col">${oltra.i18n.t('english')}</th>
+              <th scope="col">${oltra.i18n.t('french')}</th>
+              <th scope="col">${oltra.i18n.t('total')}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row"><strong>TOTAL</strong></th>
+              <th scope="row"><strong>${oltra.i18n.t('total').toUpperCase()}</strong></th>
               <td><strong>${oltra.tools.format_duration(item.enAmount)}</strong></td>
               <td><strong>${oltra.tools.format_duration(item.frAmount)}</strong></td>
               <td><strong>${oltra.tools.format_duration(item.total)}</strong></td>
@@ -291,11 +394,11 @@ const oltra = {
       return LES;
     },
     get_LES_rank: function(LES) {
-      let LES_rank = "Imbalance";
-      if(LES >= 0.85) { LES_rank = "Excellent"; } 
-      else if(LES < 0.85 && LES >= 0.70) { LES_rank = "Acceptable"; } 
-      else if(LES < 0.70) { LES_rank = "Imbalance"; }
-      return { "rank": LES_rank, "summary": oltra.config.LES_ranges[LES_rank] };
+      let LES_rank = "les_imbalance";
+      if(LES >= 0.85) { LES_rank = "les_excellent"; } 
+      else if(LES < 0.85 && LES >= 0.70) { LES_rank = "les_acceptable"; } 
+      else if(LES < 0.70) { LES_rank = "les_imbalance"; }
+      return { "rank": `${oltra.i18n.t(LES_rank)}`, "summary": oltra.config.LES_ranges(LES_rank) };
     },
     process_event_transcript_custom: function(el_parsed) {
       oltra.calc.clear_analysis();
@@ -431,18 +534,18 @@ const oltra = {
         xAxis: { 
           max: oltra.state.data.length ? oltra.state.data.at(-1)[0].toFixed(0) : 0, axisLabel: { formatter: oltra.tools.time },
           axisLine: { show: true },
-          name: 'Speaking Time', nameLocation: 'middle', nameGap: 30, nameTextStyle: { fontWeight: 'bold' } 
+          name: `${oltra.i18n.t('speaking_time')}`, nameLocation: 'middle', nameGap: 30, nameTextStyle: { fontWeight: 'bold' } 
         },
         tooltip: {
           trigger: 'item',
           formatter: params => {
             const item = params.data;
-            return `<strong>${item.language === 'en' ? 'English' : 'French'}</strong><br>Airtime: ${oltra.tools.time(item.start.toFixed(0))} - ${oltra.tools.time(item.end.toFixed(0))}<br>
-              Duration: <strong>${oltra.tools.format_duration(item.amount)}</strong><br>Speaker: ${item.speaker}<br>`;
+            return `<strong>${item.language === 'en' ? oltra.i18n.t('english') : oltra.i18n.t('french')}</strong><br>${oltra.i18n.t('airtime')}: ${oltra.tools.time(item.start.toFixed(0))} - ${oltra.tools.time(item.end.toFixed(0))}<br>
+              ${oltra.i18n.t('duration')}: <strong>${oltra.tools.format_duration(item.amount)}</strong><br>${oltra.i18n.t('speaker')}: ${item.speaker}<br>`;
           }
         },
         grid: oltra.config.chart_grid,
-        yAxis: { name: 'Speaker', nameLocation: 'middle', //nameGap: 40, 
+        yAxis: { name: `${oltra.i18n.t('speaker')}`, nameLocation: 'middle', //nameGap: 40, 
           type: 'category', 
           inverse: true, axisTick: { show: false },
           nameTextStyle: { fontWeight: 'bold' }, 
@@ -487,12 +590,12 @@ const oltra = {
           trigger: 'item',
           formatter: params => {
             const item = params.data;
-            return `<strong>${item.language === 'en' ? 'English' : 'French'}</strong><br>Airtime: ${oltra.tools.time(item.start.toFixed(0))} - ${oltra.tools.time(item.end.toFixed(0))}<br>
-              Duration: <strong>${oltra.tools.format_duration(item.amount)}</strong><br>Speaker: ${item.speaker}<br>`;
+            return `<strong>${item.language === 'en' ? oltra.i18n.t('english') : oltra.i18n.t('french')}</strong><br>${oltra.i18n.t('airtime')}: ${oltra.tools.time(item.start.toFixed(0))} - ${oltra.tools.time(item.end.toFixed(0))}<br>
+              ${oltra.i18n.t('duration')}: <strong>${oltra.tools.format_duration(item.amount)}</strong><br>${oltra.i18n.t('speaker')}: ${item.speaker}<br>`;
           }
         },
         grid: oltra.config.chart_grid,
-        yAxis: { name: 'Language', nameLocation: 'middle', nameGap: 40, type: 'category', data: ['EN', 'FR'], inverse: true, axisTick: { show: false }, nameTextStyle: { fontWeight: 'bold' } },
+        yAxis: { name: `${oltra.i18n.t('language')}`, nameLocation: 'middle', nameGap: 40, type: 'category', data: ['EN', 'FR'], inverse: true, axisTick: { show: false }, nameTextStyle: { fontWeight: 'bold' } },
         series: [{
           type: 'custom',
           renderItem: function(params, api) {
@@ -528,13 +631,13 @@ const oltra = {
           formatter: p => {
             const index = p[0].dataIndex;
             const [seconds, les, speaker, lang] = oltra.state.data[index];
-            const status = les >= 0.85 ? 'Excellent' : les >= 0.7 ? 'Acceptable' : 'Imbalance';
-            return `${oltra.tools.time(seconds.toFixed(0))}<br />${speaker} (${lang})<br />LES: <b>${les}</b> — ${status}`;
+            const status = les >= 0.85 ? oltra.i18n.t('les_excellent') : les >= 0.7 ? oltra.i18n.t('les_acceptable') : oltra.i18n.t('les_imbalance');
+            return `${oltra.tools.time(seconds.toFixed(0))}<br />${speaker} (${lang})<br />${oltra.i18n.t('les')}: <b>${les}</b> — ${status}`;
           }
         },
         grid: oltra.config.chart_grid,
         xAxis: { type: 'value', min: 0, axisLabel: { formatter: oltra.tools.time } }, //name: 'Speaking Time', nameLocation: 'middle', nameGap: 30,
-        yAxis: { type: 'value', min: 0.5, max: 1, name: 'Equilibrium', nameLocation: 'middle', nameGap: 40, nameTextStyle: { fontWeight: 'bold' } },
+        yAxis: { type: 'value', min: 0.5, max: 1, name: `${oltra.i18n.t('equilibrium')}`, nameLocation: 'middle', nameGap: 40, nameTextStyle: { fontWeight: 'bold' } },
         series: [{
           type: 'line', data: oltra.state.data, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#2563eb' },
           markArea: {

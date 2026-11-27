@@ -51,6 +51,21 @@
   margin-top:-80px;
   margin-bottom:30px;
 }
+.language-switch {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+.language-switch a {
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.language-switch a:hover {
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+.brand {
+  margin-bottom: 0px;
+}
 
 @media print {
   @page {
@@ -92,6 +107,12 @@
     display: none;
   }
   #otranscript {
+    display: none;
+  }
+  .language-switch {
+    display: none;
+  }
+  .language-switch a {
     display: none;
   }
 }
